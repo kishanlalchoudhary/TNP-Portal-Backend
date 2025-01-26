@@ -8,8 +8,10 @@
     "dev": "nodemon server.js",
     "seed": "node prisma/seed.js",
     "migrate": "npx prisma migrate dev && npx prisma generate",
-    "generate": "npx prisma generate" ,
-    "studio": "npx prisma studio"
+    "migrate:deploy": "npx prisma migrate deploy",
+    "generate": "npx prisma generate",
+    "studio": "npx prisma studio",
+    "push": "npx prisma db push"
   },
   "author": "",
   "license": "ISC",

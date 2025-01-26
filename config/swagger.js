@@ -17,11 +17,11 @@ const documentation = {
   tags: [
     {
       name: "Authentication",
-      description: "APIs for authentication.",
+      description: "APIs for authentication",
     },
     {
       name: "Users",
-      description: "APIs related to user management.",
+      description: "APIs related to user management",
     },
   ],
   paths: {
