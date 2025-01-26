@@ -1,0 +1,52 @@
+const express = require("express");
+const morgan = require("morgan");
+const cors = require("cors");
+const hpp = require("hpp");
+const helmet = require("helmet");
+const compression = require("compression");
+const swaggerUI = require("swagger-ui-express");
+
+const config = require("./config/env");
+const documentation = require("./config/swagger");
+const prisma = require("./config/prisma")
+const app = express();
+
+if (config.environment === "development") {
+  const logger = morgan("dev");
+  app.use(logger);
+}
+
+if (config.environment === "development") {
+  app.use(cors());
+} else {
+  const whitelist = [config.frontendURL];
+  const corsOptions = {
+    origin: function (origin, callback) {
+      if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  };
+  app.use(cors(corsOptions));
+}
+
+app.use(hpp());
+app.use(helmet());
+app.use(compression());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(documentation));
+
+process.on('SIGINT', async () => {
+  await prisma.$disconnect();
+  process.exit();
+});
+
+app.listen(config.port, () => {
+  console.log(
+    `Server is running in ${config.environment} mode on port ${config.port}`
+  );
+});
