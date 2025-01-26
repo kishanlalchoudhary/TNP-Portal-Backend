@@ -6,11 +6,11 @@ const documentation = {
   },
   servers: [
     {
-      url: "http://localhost:8000/api",
+      url: "http://localhost:8000/api/v1",
       description: "Local Server",
     },
     {
-      url: "https://api.tnp-portal.com/api",
+      url: "https://tnp-portal-backend-tpx5.onrender.com/api/v1",
       description: "Production Server",
     },
   ],
