@@ -40,6 +40,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(documentation));
 
+app.use("/api/v1/admins", require("./routes/admin.route"));
+app.use("/api/v1/auth", require("./routes/auth.route"));
+
 process.on("SIGINT", async () => {
   await prisma.$disconnect();
   process.exit();

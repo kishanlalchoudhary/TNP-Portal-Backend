@@ -1,3 +1,6 @@
+const { createAdmin, deleteAdmin } = require("../docs/admin.doc");
+const { adminLogin, adminLogout } = require("../docs/auth.doc");
+
 const documentation = {
   openapi: "3.1.0",
   info: {
@@ -16,30 +19,27 @@ const documentation = {
   ],
   tags: [
     {
-      name: "Authentication",
-      description: "APIs for authentication",
+      name: "Admins",
+      description: "APIs related to admin management",
     },
     {
-      name: "Users",
-      description: "APIs related to user management",
+      name: "Authentication",
+      description: "APIs related to authentication",
     },
   ],
   paths: {
-    // "/auth/login": {
-    //   post: loginUser,
-    // },
-    // "/auth/logout": {
-    //   post: logoutUser,
-    // },
-    // "/users": {
-    //   post: createUser,
-    //   get: getUsers,
-    // },
-    // "/users/{userId}": {
-    //   get: getUser,
-    //   put: updateUser,
-    //   delete: deleteUser,
-    // },
+    "/admins": {
+      post: createAdmin,
+    },
+    "/admins/{id}": {
+      delete: deleteAdmin,
+    },
+    "/auth/admin/login": {
+      post: adminLogin,
+    },
+    "/auth/admin/logout": {
+      post: adminLogout,
+    },
   },
   components: {
     securitySchemes: {
