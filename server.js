@@ -8,7 +8,7 @@ const swaggerUI = require("swagger-ui-express");
 
 const config = require("./config/env");
 const documentation = require("./config/swagger");
-const prisma = require("./config/prisma")
+const prisma = require("./config/prisma");
 const app = express();
 
 if (config.environment === "development") {
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(documentation));
 
-process.on('SIGINT', async () => {
+process.on("SIGINT", async () => {
   await prisma.$disconnect();
   process.exit();
 });

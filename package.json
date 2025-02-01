@@ -1,5 +1,5 @@
 {
-  "name": "TNP Portal API",
+  "name": "tnp-portal-api",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
