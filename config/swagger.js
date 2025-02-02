@@ -1,5 +1,9 @@
-const { createAdmin, deleteAdmin } = require("../docs/admin.doc");
-const { adminLogin, adminLogout } = require("../docs/auth.doc");
+const {
+  adminLogin,
+  adminLogout,
+  createAdmin,
+  deleteAdmin,
+} = require("../docs/admin.doc");
 
 const documentation = {
   openapi: "3.1.0",
@@ -28,17 +32,17 @@ const documentation = {
     },
   ],
   paths: {
+    "/admins/login": {
+      post: adminLogin,
+    },
+    "/admins/logout": {
+      post: adminLogout,
+    },
     "/admins": {
       post: createAdmin,
     },
     "/admins/{id}": {
       delete: deleteAdmin,
-    },
-    "/auth/admin/login": {
-      post: adminLogin,
-    },
-    "/auth/admin/logout": {
-      post: adminLogout,
     },
   },
   components: {

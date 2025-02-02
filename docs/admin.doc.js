@@ -1,3 +1,47 @@
+const adminLogin = {
+  tags: ["Authentication"],
+  description: "Login Admin",
+  operationId: "loginAdmin",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            email: {
+              type: "string",
+              example: "kisanchoudhary000@gmail.com",
+            },
+            password: {
+              type: "string",
+              example: "kishanlalchoudhary",
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
+const adminLogout = {
+  tags: ["Authentication"],
+  description: "Logout Admin",
+  operationId: "LogoutAdmin",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
 const createAdmin = {
   tags: ["Admins"],
   description: "Create Admin",
@@ -63,6 +107,8 @@ const deleteAdmin = {
 };
 
 module.exports = {
+  adminLogin,
+  adminLogout,
   createAdmin,
   deleteAdmin,
 };
