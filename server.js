@@ -34,9 +34,9 @@ if (config.environment === "development") {
 
 app.use(hpp());
 app.use(helmet());
-app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
 app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(documentation));
 
