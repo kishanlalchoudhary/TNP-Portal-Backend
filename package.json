@@ -13,7 +13,7 @@
     "studio": "npx prisma studio",
     "push": "npx prisma db push",
     "pull": "npx prisma db pull",
-    "build": "npm install && npx prisma migrate deploy && npx prisma generate && node prisma/seed.js"
+    "build": "npm install --legacy-peer-deps && npx prisma migrate deploy && npx prisma generate && node prisma/seed.js"
   },
   "author": "",
   "license": "ISC",
