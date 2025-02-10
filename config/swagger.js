@@ -4,6 +4,7 @@ const {
   createAdmin,
   deleteAdmin,
 } = require("../docs/admin.doc");
+const { createJob, getJobs, getJob, deleteJob } = require("../docs/job.doc");
 
 const documentation = {
   openapi: "3.1.0",
@@ -30,6 +31,10 @@ const documentation = {
       name: "Authentication",
       description: "APIs related to authentication",
     },
+    {
+      name: "Jobs",
+      description: "APIs related to job management",
+    },
   ],
   paths: {
     "/admins/login": {
@@ -43,6 +48,14 @@ const documentation = {
     },
     "/admins/{id}": {
       delete: deleteAdmin,
+    },
+    "/jobs": {
+      post: createJob,
+      get: getJobs,
+    },
+    "/jobs/{id}": {
+      get: getJob,
+      delete: deleteJob,
     },
   },
   components: {

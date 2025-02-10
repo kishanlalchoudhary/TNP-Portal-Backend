@@ -7,6 +7,10 @@ const adminLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    if (!email || !password) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const admin = await prisma.admin.findUnique({ where: { email } });
     if (!admin) {
       return res.status(401).json({ message: "Invalid email or password" });
@@ -20,8 +24,8 @@ const adminLogin = async (req, res) => {
     const token = jwt.sign(
       {
         id: admin.id,
-        first_name: admin.first_name,
-        last_name: admin.last_name,
+        firstName: admin.firstName,
+        lastName: admin.lastName,
         email: admin.email,
       },
       config.jwtSecretKey,
@@ -41,8 +45,8 @@ const adminLogin = async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       admin: {
-        first_name: admin.first_name,
-        last_name: admin.last_name,
+        firstName: admin.firstName,
+        lastName: admin.lastName,
         email: admin.email,
       },
       token,
@@ -69,6 +73,10 @@ const createAdmin = async (req, res) => {
   try {
     const { first_name, last_name, email, password } = req.body;
 
+    if (!first_name || !last_name || !email || !password) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const existingAdmin = await prisma.admin.findUnique({ where: { email } });
     if (existingAdmin) {
       return res
@@ -76,10 +84,15 @@ const createAdmin = async (req, res) => {
         .json({ message: "Admin with this email already exists" });
     }
 
-    const hashedPassword = await bcrypt.hash(password, config.salt);
+    const hashed_password = await bcrypt.hash(password, config.salt);
 
     const admin = await prisma.admin.create({
-      data: { first_name, last_name, email, password: hashedPassword },
+      data: {
+        firstName: first_name,
+        lastName: last_name,
+        email,
+        password: hashed_password,
+      },
     });
 
     res.status(201).json({ message: "Admin created successfully", admin });

@@ -14,13 +14,13 @@ datasource db {
 }
 
 model Admin {
-  id         String   @id @default(cuid())
-  first_name String
-  last_name  String
-  email      String   @unique
-  password   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id        String   @id @default(cuid())
+  firstName String   @map("first_name")
+  lastName  String   @map("last_name")
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   tokens AdminToken[]
 
@@ -38,4 +38,29 @@ model AdminToken {
 
   @@index([adminId])
   @@map("admin_tokens")
+}
+
+model Job {
+  id                  String   @id @default(cuid())
+  companyName         String   @map("company_name")
+  companyDesc         String   @map("company_desc")
+  companyWebsiteURL   String   @map("company_webiste_url")
+  jobRole             String   @map("job_role")
+  jobLocation         String   @map("job_location")
+  selectionProcess    String   @map("selection_process")
+  companyLogoURL      String   @map("company_logo_url")
+  companyJdURL        String   @map("company_jd_url")
+  companyPackage      Float    @map("company_package")
+  dreamCompany        String   @map("dream_company")
+  eligibleBranches    String[] @map("eligible_branches")
+  cgpa                Float
+  automataScore       Float    @map("automata_score")
+  elqScore            Float    @map("elq_score")
+  percentage10th      Float    @map("percentage_10th")
+  percentage12th      Float    @map("percentage_12th")
+  applicationDeadline DateTime @map("application_deadline")
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("jobs")
 }
