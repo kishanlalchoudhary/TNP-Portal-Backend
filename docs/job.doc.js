@@ -111,28 +111,6 @@ const getJobs = {
       bearerAuth: [],
     },
   ],
-  parameters: [
-    {
-      name: "page",
-      in: "query",
-      description: "Page number for pagination",
-      required: false,
-      schema: {
-        type: "integer",
-        example: 1,
-      },
-    },
-    {
-      name: "limit",
-      in: "query",
-      description: "Number of jobs per page",
-      required: false,
-      schema: {
-        type: "integer",
-        example: 10,
-      },
-    },
-  ],
   responses: {},
 };
 

@@ -1,6 +1,5 @@
 const prisma = require("../config/prisma");
 const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
-const folderName = "jobs";
 
 const createJob = async (req, res) => {
   try {
@@ -116,33 +115,17 @@ const createJob = async (req, res) => {
 
 const getJobs = async (req, res) => {
   try {
-    let { page = 1, limit = 10 } = req.query;
-
-    page = parseInt(page, 10);
-    limit = parseInt(limit, 10);
-
-    if (isNaN(page) || isNaN(limit) || page < 1 || limit < 1) {
-      return res.status(400).json({ message: "Invalid page or limit values" });
-    }
-
-    const skip = (page - 1) * limit;
-
     const jobs = await prisma.job.findMany({
-      skip,
-      take: limit,
+      where: {
+        applicationDeadline: {
+          gt: new Date(),
+        },
+      },
       orderBy: { createdAt: "desc" },
     });
 
-    const totalJobs = await prisma.job.count();
-
     return res.status(200).json({
-      message: "Jobs fetched successfully",
-      pagination: {
-        page,
-        limit,
-        totalJobs,
-        totalPages: Math.ceil(totalJobs / limit),
-      },
+      message: "Active Jobs fetched successfully",
       jobs,
     });
   } catch (error) {
@@ -176,8 +159,8 @@ const deleteJob = async (req, res) => {
       return res.status(404).json({ message: "Job not found" });
     }
 
-    await deleteFileFromCloudinary(job.companyLogoURL, folderName);
-    await deleteFileFromCloudinary(job.companyJdURL, folderName);
+    await deleteFileFromCloudinary(job.companyLogoURL);
+    await deleteFileFromCloudinary(job.companyJdURL);
 
     await prisma.job.delete({ where: { id } });
 

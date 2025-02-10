@@ -1,7 +1,8 @@
 const cloudinary = require("../config/cloudinary");
 
-const getPublicId = (url, folderName) => {
-  const parts = url.split("/");
+const getPublicId = (URL) => {
+  const parts = URL.split("/");
+  const folderName = parts[parts.length - 2];
   const filename = parts[parts.length - 1];
   const publicId = filename.split(".")[0];
   return `${folderName}/${publicId}`;
