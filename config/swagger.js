@@ -29,10 +29,6 @@ const documentation = {
       description: "APIs related to admin management",
     },
     {
-      name: "Authentication",
-      description: "APIs related to authentication",
-    },
-    {
       name: "Jobs",
       description: "APIs related to job management",
     },

@@ -1,5 +1,5 @@
 const adminLogin = {
-  tags: ["Authentication"],
+  tags: ["Admins"],
   description: "Login Admin",
   operationId: "loginAdmin",
   security: [
@@ -31,7 +31,7 @@ const adminLogin = {
 };
 
 const adminLogout = {
-  tags: ["Authentication"],
+  tags: ["Admins"],
   description: "Logout Admin",
   operationId: "LogoutAdmin",
   security: [
