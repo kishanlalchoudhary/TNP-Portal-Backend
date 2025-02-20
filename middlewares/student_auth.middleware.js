@@ -9,7 +9,7 @@ const studentAuthMiddleware = async (req, res, next) => {
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Unauthorized: No token provided" });
+        .json({ success: false, message: "Unauthorized: No token provided" });
     }
 
     const decoded = jwt.verify(token, config.jwtSecretKey);
@@ -21,11 +21,16 @@ const studentAuthMiddleware = async (req, res, next) => {
     if (!storedToken) {
       return res
         .status(401)
-        .json({ message: "Unauthorized: Invalid or expired token" });
+        .json({
+          success: false,
+          message: "Unauthorized: Invalid or expired token",
+        });
     }
 
     if (!decoded.isVerified) {
-      return res.status(403).json({ message: "Verification pending" });
+      return res
+        .status(403)
+        .json({ success: false, message: "Verification pending" });
     }
 
     req.student = decoded;
@@ -33,7 +38,9 @@ const studentAuthMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    return res
+      .status(401)
+      .json({ success: false, message: "Unauthorized: Invalid token" });
   }
 };
 

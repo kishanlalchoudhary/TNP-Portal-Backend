@@ -9,7 +9,7 @@ const adminAuthMiddleware = async (req, res, next) => {
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Unauthorized: No token provided" });
+        .json({ success: false, message: "Unauthorized: No token provided" });
     }
 
     const decoded = jwt.verify(token, config.jwtSecretKey);
@@ -19,9 +19,10 @@ const adminAuthMiddleware = async (req, res, next) => {
     });
 
     if (!storedToken) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized: Invalid or expired token" });
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized: Invalid or expired token",
+      });
     }
 
     req.admin = decoded;
@@ -29,7 +30,9 @@ const adminAuthMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.error(error);
-    return res.status(401).json({ message: "Unauthorized: Invalid token" });
+    return res
+      .status(401)
+      .json({ success: false, message: "Unauthorized: Invalid token" });
   }
 };
 

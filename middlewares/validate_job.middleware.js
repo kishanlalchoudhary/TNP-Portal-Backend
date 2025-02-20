@@ -77,6 +77,7 @@ const validateJobMiddleware = [
       }
 
       return res.status(400).json({
+        success: false, 
         message: "Job validation failed",
         errors: errors.array().map((err) => err.msg),
       });

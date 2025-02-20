@@ -10,6 +10,7 @@ const registerStudent = async (req, res) => {
     });
     if (existingStudent) {
       return res.status(400).json({
+        success: false,
         message: "Student with this pict registration id already exists",
       });
     }
@@ -78,12 +79,14 @@ const registerStudent = async (req, res) => {
       },
     });
 
-    res
-      .status(201)
-      .json({ message: "Student registered successfully", student });
+    res.status(201).json({
+      success: true,
+      message: "Student registered successfully",
+      student,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -92,27 +95,34 @@ const loginStudent = async (req, res) => {
     const { pict_registration_id, password } = req.body;
 
     if (!pict_registration_id || !password) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res.status(400).json({
+        success: false,
+        message: "Missing pict registration id or password",
+      });
     }
 
     const student = await prisma.student.findUnique({
       where: { pictRegistrationId: pict_registration_id },
     });
     if (!student) {
-      return res
-        .status(401)
-        .json({ message: "Invalid pict registration id or password" });
+      return res.status(401).json({
+        success: false,
+        message: "Invalid pict registration id or password",
+      });
     }
 
     const isPasswordValid = await bcrypt.compare(password, student.password);
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ message: "Invalid pict registration id or password" });
+      return res.status(401).json({
+        success: false,
+        message: "Invalid pict registration id or password",
+      });
     }
 
     if (!student.isVerified) {
-      return res.status(403).json({ message: "Verification pending" });
+      return res
+        .status(403)
+        .json({ success: false, message: "Verification pending" });
     }
 
     const token = jwt.sign(
@@ -138,6 +148,7 @@ const loginStudent = async (req, res) => {
     });
 
     res.status(200).json({
+      success: true,
       message: "Login successful",
       student: {
         id: student.id,
@@ -150,7 +161,7 @@ const loginStudent = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -160,10 +171,10 @@ const logoutStudent = async (req, res) => {
 
     await prisma.studentToken.delete({ where: { token } });
 
-    res.status(200).json({ message: "Logout successful" });
+    res.status(200).json({ success: true, message: "Logout successful" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -181,12 +192,13 @@ const getUnverifiedStudents = async (req, res) => {
     });
 
     res.status(200).json({
+      success: true,
       message: "Unverified students fetched successfully",
       students,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -196,14 +208,20 @@ const getStudent = async (req, res) => {
 
     const student = await prisma.student.findUnique({ where: { id } });
     if (!student) {
-      return res.status(404).json({ message: "Student not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Student not found" });
     }
 
     delete student.password;
-    res.status(200).json({ message: "Student fetched successfully", student });
+    res.status(200).json({
+      success: true,
+      message: "Student fetched successfully",
+      student,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -213,10 +231,14 @@ const verifyStudent = async (req, res) => {
 
     const student = await prisma.student.findUnique({ where: { id } });
     if (!student) {
-      return res.status(404).json({ message: "Student not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Student not found" });
     }
     if (student.isVerified) {
-      return res.status(400).json({ message: "Student is already verified" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Student is already verified" });
     }
 
     await prisma.student.update({
@@ -224,10 +246,12 @@ const verifyStudent = async (req, res) => {
       data: { isVerified: true },
     });
 
-    res.status(200).json({ message: "Student verified successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Student verified successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -237,15 +261,19 @@ const deleteStudent = async (req, res) => {
 
     const student = await prisma.student.findUnique({ where: { id } });
     if (!student) {
-      return res.status(404).json({ message: "Student not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Student not found" });
     }
 
     await prisma.student.delete({ where: { id } });
 
-    res.status(200).json({ message: "Student deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Student deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 

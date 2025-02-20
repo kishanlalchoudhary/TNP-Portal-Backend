@@ -15,6 +15,7 @@ const validateAdminMiddleware = [
 
     if (!errors.isEmpty()) {
       return res.status(400).json({
+        success: false,
         message: "Admin validation failed",
         errors: errors.array().map((err) => err.msg),
       });

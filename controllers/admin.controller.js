@@ -8,17 +8,23 @@ const adminLogin = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Missing required fields" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing email or password" });
     }
 
     const admin = await prisma.admin.findUnique({ where: { email } });
     if (!admin) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
     }
 
     const token = jwt.sign(
@@ -43,6 +49,7 @@ const adminLogin = async (req, res) => {
     });
 
     res.status(200).json({
+      success: true,
       message: "Login successful",
       admin: {
         id: admin.id,
@@ -54,7 +61,7 @@ const adminLogin = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -64,10 +71,10 @@ const adminLogout = async (req, res) => {
 
     await prisma.adminToken.delete({ where: { token } });
 
-    res.status(200).json({ message: "Logout successful" });
+    res.status(200).json({ success: true, message: "Logout successful" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -77,9 +84,10 @@ const createAdmin = async (req, res) => {
 
     const existingAdmin = await prisma.admin.findUnique({ where: { email } });
     if (existingAdmin) {
-      return res
-        .status(400)
-        .json({ message: "Admin with this email already exists" });
+      return res.status(400).json({
+        success: false,
+        message: "Admin with this email already exists",
+      });
     }
 
     const hashed_password = await bcrypt.hash(password, config.salt);
@@ -93,10 +101,12 @@ const createAdmin = async (req, res) => {
       },
     });
 
-    res.status(201).json({ message: "Admin created successfully", admin });
+    res
+      .status(201)
+      .json({ success: true, message: "Admin created successfully", admin });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 
@@ -106,15 +116,19 @@ const deleteAdmin = async (req, res) => {
 
     const admin = await prisma.admin.findUnique({ where: { id } });
     if (!admin) {
-      return res.status(404).json({ message: "Admin not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Admin not found" });
     }
 
     await prisma.admin.delete({ where: { id } });
 
-    res.status(200).json({ message: "Admin deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Admin deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ success: false, message: "Something went wrong" });
   }
 };
 

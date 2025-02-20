@@ -159,7 +159,7 @@ const validateStudentMiddleware = [
 
   async (req, res, next) => {
     const errors = validationResult(req);
-    
+
     if (!req.files["documents"]) {
       errors.errors.push({
         msg: "documents pdf is required",
@@ -188,6 +188,7 @@ const validateStudentMiddleware = [
       }
 
       return res.status(400).json({
+        success: false,
         message: "Student validation failed",
         errors: errors.array().map((err) => err.msg),
       });
