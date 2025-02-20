@@ -51,6 +51,7 @@ const createJob = {
             },
             dream_company: {
               type: "string",
+              enum: ["Yes", "No"],
               example: "Yes",
             },
             eligible_branches: {

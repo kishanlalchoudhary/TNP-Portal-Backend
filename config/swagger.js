@@ -5,7 +5,16 @@ const {
   deleteAdmin,
 } = require("../docs/admin.doc");
 const { createJob, getJobs, getJob, deleteJob } = require("../docs/job.doc");
-const { registerStudent } = require("../docs/student.doc");
+const {
+  registerStudent,
+  loginStudent,
+  logoutStudent,
+  getUnverifiedStudents,
+  getStudent,
+  verifyStudent,
+  deleteStudent,
+} = require("../docs/student.doc");
+const { post } = require("../routes/student.route");
 
 const documentation = {
   openapi: "3.1.0",
@@ -60,6 +69,22 @@ const documentation = {
     },
     "/students": {
       post: registerStudent,
+    },
+    "/students/{id}": {
+      get: getStudent,
+      delete: deleteStudent,
+    },
+    "/students/unverified": {
+      get: getUnverifiedStudents,
+    },
+    "/students/{id}/verify": {
+      post: verifyStudent,
+    },
+    "/students/login": {
+      post: loginStudent,
+    },
+    "/students/logout": {
+      post: logoutStudent,
     },
   },
   components: {

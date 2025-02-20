@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const createAdmin = async () => {
   try {
     const existingAdmin = await prisma.admin.findUnique({
-      where: { email: "kisanchoudhary000@gmail.com" },
+      where: { email: "john.doe@example.com" },
     });
 
     if (existingAdmin) {
@@ -12,13 +12,13 @@ const createAdmin = async () => {
       return;
     }
 
-    const hashedPassword = await bcrypt.hash("kishanlalchoudhary", 10);
+    const hashedPassword = await bcrypt.hash("JohnDoe", 10);
 
     const admin = await prisma.admin.create({
       data: {
-        first_name: "Kishanlal",
-        last_name: "Choudhary",
-        email: "kisanchoudhary000@gmail.com",
+        firstName: "John",
+        lastName: "Doe",
+        email: "john.doe@example.com",
         password: hashedPassword,
       },
     });

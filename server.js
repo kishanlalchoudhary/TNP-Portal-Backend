@@ -42,6 +42,7 @@ app.use("/api/v1/docs", swaggerUI.serve, swaggerUI.setup(documentation));
 
 app.use("/api/v1/admins", require("./routes/admin.route"));
 app.use("/api/v1/jobs", require("./routes/job.route"));
+app.use("/api/v1/students", require("./routes/student.route"));
 
 process.on("SIGINT", async () => {
   await prisma.$disconnect();

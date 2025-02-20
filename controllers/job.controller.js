@@ -3,110 +3,31 @@ const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
 
 const createJob = async (req, res) => {
   try {
-    const {
-      company_name,
-      company_desc,
-      company_website_url,
-      job_role,
-      job_location,
-      selection_process,
-      company_package,
-      dream_company,
-      eligible_branches,
-      cgpa,
-      automata_score,
-      elq_score,
-      percentage_10th,
-      percentage_12th,
-      application_deadline,
-    } = req.body;
-
-    if (
-      !company_name ||
-      !company_desc ||
-      !company_website_url ||
-      !job_role ||
-      !job_location ||
-      !selection_process ||
-      !company_package ||
-      !dream_company ||
-      !cgpa ||
-      !automata_score ||
-      !elq_score ||
-      !percentage_10th ||
-      !percentage_12th ||
-      !application_deadline
-    ) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
-
-    if (!req.files["company_logo"] || !req.files["company_jd"]) {
-      return res.status(400).json({ message: "Missing required documents" });
-    }
-
-    const companyLogoURL = req.files["company_logo"][0].path;
-    const companyJdURL = req.files["company_jd"][0].path;
-    const companyPackage = parseFloat(company_package);
-    const cgpaScore = parseFloat(cgpa);
-    const automataScore = parseFloat(automata_score);
-    const elqScore = parseFloat(elq_score);
-    const percentage10th = parseFloat(percentage_10th);
-    const percentage12th = parseFloat(percentage_12th);
-    const eligibleBranches = eligible_branches
-      ? eligible_branches.split(",")
-      : [];
-
-    if (cgpa < 0 || cgpa > 10) {
-      return res.status(400).json({ message: "CGPA must be between 0 and 10" });
-    }
-
-    if (automata_score < 0 || automata_score > 100) {
-      return res
-        .status(400)
-        .json({ message: "Automata score must be between 0 and 100" });
-    }
-
-    if (elq_score < 0 || elq_score > 100) {
-      return res
-        .status(400)
-        .json({ message: "ELQ score must be between 0 and 10" });
-    }
-
-    if (percentage_10th < 0 || percentage_10th > 100) {
-      return res
-        .status(400)
-        .json({ message: "10th Percentage must be between 0 and 10" });
-    }
-
-    if (percentage_12th < 0 || percentage_12th > 100) {
-      return res
-        .status(400)
-        .json({ message: "12th Percentage must be between 0 and 10" });
-    }
-
     const job = await prisma.job.create({
       data: {
-        companyName: company_name,
-        companyDesc: company_desc,
-        companyWebsiteURL: company_website_url,
-        jobRole: job_role,
-        jobLocation: job_location,
-        selectionProcess: selection_process,
-        companyLogoURL,
-        companyJdURL,
-        companyPackage,
-        dreamCompany: dream_company,
-        eligibleBranches,
-        cgpa: cgpaScore,
-        automataScore,
-        elqScore,
-        percentage10th,
-        percentage12th,
+        companyName: req.body.company_name,
+        companyDesc: req.body.company_desc,
+        companyWebsiteURL: req.body.company_website_url,
+        jobRole: req.body.job_role,
+        jobLocation: req.body.job_location,
+        selectionProcess: req.body.selection_process,
+        companyLogoURL: req.files["company_logo"][0].path,
+        companyJdURL: req.files["company_jd"][0].path,
+        companyPackage: parseFloat(req.body.company_package),
+        dreamCompany: req.body.dream_company,
+        eligibleBranches: req.body.eligibleBranches
+          ? req.body.eligible_branches.split(",")
+          : [],
+        cgpa: parseFloat(req.body.cgpa),
+        automataScore: parseFloat(req.body.automata_score),
+        elqScore: parseFloat(req.body.elq_score),
+        percentage10th: parseFloat(req.body.percentage_10th),
+        percentage12th: parseFloat(req.body.percentage_12th),
         applicationDeadline: new Date(application_deadline),
       },
     });
 
-    return res.status(201).json({ message: "Job created successfully", job });
+    res.status(201).json({ message: "Job created successfully", job });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -124,7 +45,7 @@ const getJobs = async (req, res) => {
       orderBy: { createdAt: "desc" },
     });
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "Active Jobs fetched successfully",
       jobs,
     });

@@ -1,22 +1,32 @@
 const cloudinary = require("../config/cloudinary");
 
 const getPublicId = (URL) => {
-  const parts = URL.split("/");
-  const folderName = parts[parts.length - 2];
-  const filename = parts[parts.length - 1];
-  const publicId = filename.split(".")[0];
-  return `${folderName}/${publicId}`;
+  try {
+    const urlParts = URL.split("/");
+    const filenameWithExtension = urlParts.pop();
+    const folderName = urlParts.pop();
+    const publicId = filenameWithExtension.split(".")[0];
+
+    return folderName ? `${folderName}/${publicId}` : publicId;
+  } catch (error) {
+    console.error("Error extracting publicId:", error);
+    return null;
+  }
 };
 
-const deleteFileFromCloudinary = async (fileURL, folderName) => {
+const deleteFileFromCloudinary = async (fileURL) => {
   try {
-    const publicId = getPublicId(fileURL, folderName);
+    const publicId = getPublicId(fileURL);
+    if (!publicId) {
+      throw new Error("Invalid Cloudinary URL format");
+    }
+
     const response = await cloudinary.uploader.destroy(publicId);
+    console.log(`Deleted ${publicId} from Cloudinary`, response);
     return response;
   } catch (error) {
-    console.error("Error deleting file from Cloudinary:", error);
     throw error;
   }
 };
 
-module.exports = { getPublicId, deleteFileFromCloudinary };
+module.exports = { deleteFileFromCloudinary };

@@ -2,7 +2,7 @@ const config = require("../config/env");
 const prisma = require("../config/prisma");
 const jwt = require("jsonwebtoken");
 
-const isAdmin = async (req, res, next) => {
+const adminAuthMiddleware = async (req, res, next) => {
   try {
     const token = req.header("Authorization")?.split(" ")[1];
 
@@ -34,5 +34,5 @@ const isAdmin = async (req, res, next) => {
 };
 
 module.exports = {
-  isAdmin,
+  adminAuthMiddleware,
 };

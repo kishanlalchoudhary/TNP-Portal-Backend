@@ -6,11 +6,14 @@ const {
   createAdmin,
   deleteAdmin,
 } = require("../controllers/admin.controller");
-const { isAdmin } = require("../middlewares/auth.middleware");
+const { adminAuthMiddleware } = require("../middlewares/admin_auth.middleware");
+const {
+  validateAdminMiddleware,
+} = require("../middlewares/validate_admin.middleware");
 
 router.post("/login", adminLogin);
-router.post("/logout", isAdmin, adminLogout);
-router.post("/", isAdmin, createAdmin);
-router.delete("/:id", isAdmin, deleteAdmin);
+router.post("/logout", adminAuthMiddleware, adminLogout);
+router.post("/", adminAuthMiddleware, validateAdminMiddleware, createAdmin);
+router.delete("/:id", adminAuthMiddleware, deleteAdmin);
 
 module.exports = router;

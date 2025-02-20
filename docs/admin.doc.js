@@ -1,7 +1,7 @@
 const adminLogin = {
   tags: ["Admins"],
   description: "Login Admin",
-  operationId: "loginAdmin",
+  operationId: "LoginAdmin",
   security: [
     {
       bearerAuth: [],
@@ -15,11 +15,11 @@ const adminLogin = {
           properties: {
             email: {
               type: "string",
-              example: "kisanchoudhary000@gmail.com",
+              example: "john.doe@example.com",
             },
             password: {
               type: "string",
-              example: "kishanlalchoudhary",
+              example: "JohnDoe",
             },
           },
         },
@@ -45,7 +45,7 @@ const adminLogout = {
 const createAdmin = {
   tags: ["Admins"],
   description: "Create Admin",
-  operationId: "createAdmin",
+  operationId: "CreateAdmin",
   security: [
     {
       bearerAuth: [],
@@ -59,19 +59,19 @@ const createAdmin = {
           properties: {
             first_name: {
               type: "string",
-              example: "Kishanlal",
+              example: "John",
             },
             last_name: {
               type: "string",
-              example: "Choudhary",
+              example: "Doe",
             },
             email: {
               type: "string",
-              example: "kisanchoudhary000@gmail.com",
+              example: "john.doe@example.com",
             },
             password: {
               type: "string",
-              example: "kishanlalchoudhary",
+              example: "JohnDoe",
             },
           },
         },
@@ -85,7 +85,7 @@ const createAdmin = {
 const deleteAdmin = {
   tags: ["Admins"],
   description: "Delete Admin",
-  operationId: "deleteAdmin",
+  operationId: "DeleteAdmin",
   security: [
     {
       bearerAuth: [],

@@ -45,6 +45,7 @@ const adminLogin = async (req, res) => {
     res.status(200).json({
       message: "Login successful",
       admin: {
+        id: admin.id,
         firstName: admin.firstName,
         lastName: admin.lastName,
         email: admin.email,
@@ -60,6 +61,7 @@ const adminLogin = async (req, res) => {
 const adminLogout = async (req, res) => {
   try {
     const { token } = req;
+
     await prisma.adminToken.delete({ where: { token } });
 
     res.status(200).json({ message: "Logout successful" });
@@ -72,10 +74,6 @@ const adminLogout = async (req, res) => {
 const createAdmin = async (req, res) => {
   try {
     const { first_name, last_name, email, password } = req.body;
-
-    if (!first_name || !last_name || !email || !password) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
 
     const existingAdmin = await prisma.admin.findUnique({ where: { email } });
     if (existingAdmin) {

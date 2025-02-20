@@ -17,22 +17,22 @@ model Admin {
   id        String   @id @default(cuid())
   firstName String   @map("first_name")
   lastName  String   @map("last_name")
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  email     String   @unique @map("email")
+  password  String   @map("password")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   tokens AdminToken[]
-
+  
   @@map("admins")
 }
 
 model AdminToken {
   id        String   @id @default(cuid())
-  token     String   @unique
-  adminId   String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
+  token     String   @unique @map("token")
+  adminId   String   @map("admin_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
@@ -59,8 +59,8 @@ model Job {
   percentage10th      Float    @map("percentage_10th")
   percentage12th      Float    @map("percentage_12th")
   applicationDeadline DateTime @map("application_deadline")
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
 
   @@map("jobs")
 }
@@ -82,7 +82,7 @@ model Student {
   division                 String   @map("division")
   rollNumber               Int      @map("roll_number")
   universityPRN            String   @map("university_prn")
-  pictRegistrationId       String   @map("pict_registration_id")
+  pictRegistrationId       String   @unique @map("pict_registration_id")
   percentage10th           Float    @map("percentage_10th")
   board10th                String   @map("board_10th")
   passingYear10th          Int      @map("passing_year_10th")
@@ -108,8 +108,8 @@ model Student {
   sgpaSeSem2               Float    @map("sgpa_se_sem_2")
   sgpaTeSem1               Float    @map("sgpa_te_sem_1")
   sgpaTeSem2               Float    @map("sgpa_te_sem_2")
-  sgpaBeSem1               Float    @map("sgpa_be_sem_1")
-  sgpaBeSem2               Float    @map("sgpa_be_sem_2")
+  sgpaBeSem1               Float?   @map("sgpa_be_sem_1")
+  sgpaBeSem2               Float?   @map("sgpa_be_sem_2")
   activeBacklogs           Int      @map("active_backlogs")
   activeBacklogSemesters   String[] @map("active_backlog_semesters")
   passiveBacklogs          Int      @map("passive_backlogs")
@@ -123,8 +123,8 @@ model Student {
   beReceiptURL             String   @map("be_receipt_url")
   password                 String   @map("password")
   isVerified               Boolean  @default(false) @map("is_verified")
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+  createdAt                DateTime @default(now()) @map("created_at")
+  updatedAt                DateTime @updatedAt @map("updated_at")
 
   tokens StudentToken[]
 
@@ -133,10 +133,10 @@ model Student {
 
 model StudentToken {
   id        String   @id @default(cuid())
-  token     String   @unique
-  studentId String
-  expiresAt DateTime
-  createdAt DateTime @default(now())
+  token     String   @unique @map("token")
+  studentId String   @map("student_id")
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
 
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 

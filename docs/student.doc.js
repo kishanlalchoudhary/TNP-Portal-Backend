@@ -104,13 +104,11 @@ const registerStudent = {
             sgpa_se_sem_2: { type: "number", example: 9.0 },
             sgpa_te_sem_1: { type: "number", example: 9.1 },
             sgpa_te_sem_2: { type: "number", example: 9.2 },
-            sgpa_be_sem_1: { type: "number", example: 9.3 },
-            sgpa_be_sem_2: { type: "number", example: 9.4 },
             active_backlogs: { type: "integer", example: 0 },
             active_backlog_semesters: {
               type: "array",
               items: { type: "string" },
-              example: ["SE-2", "TE-1"],
+              example: ["SE-SEM-2", "TE-SEM-1"],
             },
             passive_backlogs: { type: "integer", example: 0 },
             year_down: { type: "string", example: "No" },
@@ -118,9 +116,9 @@ const registerStudent = {
             pan_number: { type: "string", example: "ABCDE1234F" },
             passport_number: { type: "string", example: "A1234567" },
             citizenship: { type: "string", example: "Indian" },
-            documents_url: { type: "string", format: "binary" },
-            amcat_result_url: { type: "string", format: "binary" },
-            be_receipt_url: { type: "string", format: "binary" },
+            documents: { type: "string", format: "binary" },
+            amcat_result: { type: "string", format: "binary" },
+            be_receipt: { type: "string", format: "binary" },
             password: { type: "string", example: "JohnDoe" },
           },
         },
@@ -131,4 +129,140 @@ const registerStudent = {
   responses: {},
 };
 
-module.exports = { registerStudent };
+const loginStudent = {
+  tags: ["Students"],
+  description: "Login Student",
+  operationId: "LoginStudent",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            pict_registration_id: {
+              type: "string",
+              example: "C2K21106773",
+            },
+            password: {
+              type: "string",
+              example: "JohnDoe",
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
+const logoutStudent = {
+  tags: ["Students"],
+  description: "Logout Student",
+  operationId: "LogoutStudent",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
+const getUnverifiedStudents = {
+  tags: ["Students"],
+  description: "Get Unverified Students",
+  operationId: "GetUnverifiedStudents",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
+const getStudent = {
+  tags: ["Students"],
+  description: "Get Student",
+  operationId: "GetStudent",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Student Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const verifyStudent = {
+  tags: ["Students"],
+  description: "Verify Student",
+  operationId: "VerifyStudent",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Student Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const deleteStudent = {
+  tags: ["Students"],
+  description: "Student Admin",
+  operationId: "studentAdmin",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Student Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+module.exports = {
+  registerStudent,
+  loginStudent,
+  logoutStudent,
+  getUnverifiedStudents,
+  getStudent,
+  verifyStudent,
+  deleteStudent,
+};
