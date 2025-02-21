@@ -124,6 +124,8 @@ model Student {
   panNumber                String   @map("pan_number")
   passportNumber           String   @map("passport_number")
   citizenship              String   @map("citizenship")
+  automataScore            Float    @map("automata_score")
+  elqScore                 Float    @map("elq_score")
   documentsURL             String   @map("documents_url")
   amcatResultURL           String   @map("amcat_result_url")
   beReceiptURL             String   @map("be_receipt_url")

@@ -155,6 +155,16 @@ const validateStudentMiddleware = [
   body("pan_number").notEmpty().withMessage("pan number is required"),
   body("passport_number").notEmpty().withMessage("passport number is required"),
   body("citizenship").notEmpty().withMessage("citizenship is required"),
+  body("automata_score")
+    .notEmpty()
+    .withMessage("automata score is required")
+    .isFloat({ min: -1, max: 100 })
+    .withMessage("automata score must be between 0 and 100"),
+  body("elq_score")
+    .notEmpty()
+    .withMessage("elq score is required")
+    .isFloat({ min: -1, max: 100 })
+    .withMessage("elq score must be between 0 and 100"),
   body("password").notEmpty().withMessage("password is required"),
 
   async (req, res, next) => {

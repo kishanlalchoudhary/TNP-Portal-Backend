@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "students" ADD COLUMN     "automata_score" DOUBLE PRECISION NOT NULL DEFAULT -1,
+ADD COLUMN     "elq_score" DOUBLE PRECISION NOT NULL DEFAULT -1;

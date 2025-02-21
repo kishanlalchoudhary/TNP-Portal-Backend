@@ -73,6 +73,8 @@ const registerStudent = async (req, res) => {
         panNumber: req.body.pan_number,
         passportNumber: req.body.passport_number,
         citizenship: req.body.citizenship,
+        automataScore: parseFloat(req.body.automata_score),
+        elqScore: parseFloat(req.body.elq_score),
         documentsURL: req.files["documents"][0].path,
         amcatResultURL: req.files["amcat_result"][0].path,
         beReceiptURL: req.files["be_receipt"][0].path,
@@ -360,7 +362,7 @@ const getAppliedJobs = async (req, res) => {
       where: {
         applications: {
           some: {
-            studentId: id
+            studentId: id,
           },
         },
       },

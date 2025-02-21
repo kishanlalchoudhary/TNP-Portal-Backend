@@ -1,6 +1,7 @@
 const prisma = require("../config/prisma");
 const parser = require("json-2-csv");
 const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
+const { isEligibleForJob } = require("../utils/student.utility");
 
 const createJob = async (req, res) => {
   try {
@@ -139,6 +140,15 @@ const applyToJob = async (req, res) => {
     const job = await prisma.job.findUnique({ where: { id: jobId } });
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const student = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+    if (!isEligibleForJob(student, job)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Not eligible to apply for job" });
     }
 
     const application = await prisma.application.findUnique({

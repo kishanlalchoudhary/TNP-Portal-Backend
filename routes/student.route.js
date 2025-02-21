@@ -36,8 +36,8 @@ router.post("/logout", studentAuthMiddleware, logoutStudent);
 router.get("/unverified", adminAuthMiddleware, getUnverifiedStudents);
 router.get("/verified", adminAuthMiddleware, getVerifiedStudents);
 router.get("/:id", adminAuthMiddleware, getStudent);
-router.post("/:id/verify", adminAuthMiddleware, verifyStudent);
 router.delete("/:id", adminAuthMiddleware, deleteStudent);
+router.post("/:id/verify", adminAuthMiddleware, verifyStudent);
 router.get("/me/profile", studentAuthMiddleware, getProfile);
 router.get("/me/applied-jobs", studentAuthMiddleware, getAppliedJobs);
 

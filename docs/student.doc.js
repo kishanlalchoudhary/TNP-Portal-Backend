@@ -151,6 +151,18 @@ const registerStudent = {
             pan_number: { type: "string", example: "ABCDE1234F" },
             passport_number: { type: "string", example: "A1234567" },
             citizenship: { type: "string", example: "Indian" },
+            automata_score: {
+              type: "number",
+              example: 70.0,
+              minimum: -1,
+              maximum: 100,
+            },
+            elq_score: {
+              type: "number",
+              example: 50.0,
+              minimum: -1,
+              maximum: 100,
+            },
             documents: { type: "string", format: "binary" },
             amcat_result: { type: "string", format: "binary" },
             be_receipt: { type: "string", format: "binary" },

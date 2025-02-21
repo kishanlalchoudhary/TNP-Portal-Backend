@@ -11,9 +11,9 @@ const {
   validateAdminMiddleware,
 } = require("../middlewares/validate_admin.middleware");
 
+router.post("/", adminAuthMiddleware, validateAdminMiddleware, createAdmin);
 router.post("/login", adminLogin);
 router.post("/logout", adminAuthMiddleware, adminLogout);
-router.post("/", adminAuthMiddleware, validateAdminMiddleware, createAdmin);
 router.delete("/:id", adminAuthMiddleware, deleteAdmin);
 
 module.exports = router;
