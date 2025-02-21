@@ -253,6 +253,8 @@ const downloadAppliedStudentsCSV = async (req, res) => {
         sgpaTeSem2: true,
         sgpaBeSem1: true,
         sgpaBeSem2: true,
+        automataScore: true,
+        elqScore: true,
         cgpa: true,
       },
       orderBy: {

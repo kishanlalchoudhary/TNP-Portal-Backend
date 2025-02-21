@@ -339,6 +339,8 @@ const getProfile = async (req, res) => {
         aadharNumber: true,
         panNumber: true,
         passportNumber: true,
+        automataScore: true,
+        elqScore: true,
         cgpa: true,
       },
     });
