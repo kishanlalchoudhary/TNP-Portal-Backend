@@ -1,5 +1,4 @@
 const { body, validationResult } = require("express-validator");
-const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
 
 const validateStudentMiddleware = [
   body("full_name").notEmpty().withMessage("full name is required"),
@@ -189,14 +188,6 @@ const validateStudentMiddleware = [
     }
 
     if (!errors.isEmpty()) {
-      try {
-        await deleteFileFromCloudinary(req.files["documents"][0].path);
-        await deleteFileFromCloudinary(req.files["amcat_result"][0].path);
-        await deleteFileFromCloudinary(req.files["be_receipt"][0].path);
-      } catch (error) {
-        console.error(error);
-      }
-
       return res.status(400).json({
         success: false,
         message: "Student validation failed",

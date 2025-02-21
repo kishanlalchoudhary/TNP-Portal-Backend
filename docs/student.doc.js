@@ -146,7 +146,7 @@ const registerStudent = {
               example: ["SE-SEM-2", "TE-SEM-1"],
             },
             passive_backlogs: { type: "integer", example: 0 },
-            year_down: { type: "string", example: "No" },
+            year_down: { type: "string", enum: ["Yes", "No"], example: "No" },
             aadhar_number: { type: "string", example: "123456789012" },
             pan_number: { type: "string", example: "ABCDE1234F" },
             passport_number: { type: "string", example: "A1234567" },

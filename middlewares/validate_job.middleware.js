@@ -1,5 +1,4 @@
 const { body, validationResult } = require("express-validator");
-const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
 
 const validateJobMiddleware = [
   body("company_name").notEmpty().withMessage("company name is required"),
@@ -84,13 +83,6 @@ const validateJobMiddleware = [
     }
 
     if (!errors.isEmpty()) {
-      try {
-        await deleteFileFromCloudinary(req.files["company_logo"][0].path);
-        await deleteFileFromCloudinary(req.files["company_jd"][0].path);
-      } catch (error) {
-        console.error(error);
-      }
-
       return res.status(400).json({
         success: false,
         message: "Job validation failed",
