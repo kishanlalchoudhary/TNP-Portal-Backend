@@ -2,6 +2,7 @@ const prisma = require("../config/prisma");
 const bcrypt = require("bcrypt");
 const config = require("../config/env");
 const jwt = require("jsonwebtoken");
+const { calculateCGPA } = require("../utils/student.utility");
 
 const registerStudent = async (req, res) => {
   try {
@@ -202,6 +203,30 @@ const getUnverifiedStudents = async (req, res) => {
   }
 };
 
+const getVerifiedStudents = async (req, res) => {
+  try {
+    const students = await prisma.student.findMany({
+      where: { isVerified: true },
+      select: {
+        id: true,
+        fullName: true,
+        pictRegistrationId: true,
+        universityPRN: true,
+      },
+      orderBy: { createdAt: "asc" },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Verified students fetched successfully",
+      students,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
 const getStudent = async (req, res) => {
   try {
     const { id } = req.params;
@@ -241,9 +266,11 @@ const verifyStudent = async (req, res) => {
         .json({ success: false, message: "Student is already verified" });
     }
 
+    const cgpa = calculateCGPA(student);
+
     await prisma.student.update({
       where: { id },
-      data: { isVerified: true },
+      data: { isVerified: true, cgpa },
     });
 
     res
@@ -277,12 +304,98 @@ const deleteStudent = async (req, res) => {
   }
 };
 
+const getProfile = async (req, res) => {
+  try {
+    const { id } = req.student;
+
+    const student = await prisma.student.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        fullName: true,
+        primaryEmail: true,
+        primaryMobileNumber: true,
+        dateOfBirth: true,
+        gender: true,
+        branch: true,
+        division: true,
+        rollNumber: true,
+        universityPRN: true,
+        pictRegistrationId: true,
+        percentage10th: true,
+        after10thAppearedFor: true,
+        percentage12th: true,
+        percentageDiploma: true,
+        sgpaFeSem1: true,
+        sgpaFeSem2: true,
+        sgpaSeSem1: true,
+        sgpaSeSem2: true,
+        sgpaTeSem1: true,
+        sgpaTeSem2: true,
+        sgpaBeSem1: true,
+        sgpaBeSem2: true,
+        aadharNumber: true,
+        panNumber: true,
+        passportNumber: true,
+        cgpa: true,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile fetched successfully",
+      student,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const getAppliedJobs = async (req, res) => {
+  try {
+    const { id } = req.student;
+
+    const jobs = await prisma.job.findMany({
+      where: {
+        applications: {
+          some: {
+            studentId: id
+          },
+        },
+      },
+      select: {
+        id: true,
+        companyLogoURL: true,
+        companyName: true,
+        companyPackage: true,
+        dreamCompany: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Applied Jobs fetched successfully",
+      jobs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   registerStudent,
   loginStudent,
   logoutStudent,
   getUnverifiedStudents,
+  getVerifiedStudents,
   getStudent,
   verifyStudent,
   deleteStudent,
+  getProfile,
+  getAppliedJobs,
 };

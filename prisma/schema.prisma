@@ -23,7 +23,7 @@ model Admin {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   tokens AdminToken[]
-  
+
   @@map("admins")
 }
 
@@ -58,9 +58,14 @@ model Job {
   elqScore            Float    @map("elq_score")
   percentage10th      Float    @map("percentage_10th")
   percentage12th      Float    @map("percentage_12th")
+  percentageDiploma   Float    @map("percentage_diploma")
+  activeBacklogs      Int      @map("active_backlogs")
+  passiveBacklogs     Int      @map("passive_backlogs")
   applicationDeadline DateTime @map("application_deadline")
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @updatedAt @map("updated_at")
+
+  applications Application[]
 
   @@map("jobs")
 }
@@ -108,8 +113,8 @@ model Student {
   sgpaSeSem2               Float    @map("sgpa_se_sem_2")
   sgpaTeSem1               Float    @map("sgpa_te_sem_1")
   sgpaTeSem2               Float    @map("sgpa_te_sem_2")
-  sgpaBeSem1               Float?   @map("sgpa_be_sem_1")
-  sgpaBeSem2               Float?   @map("sgpa_be_sem_2")
+  sgpaBeSem1               Float?   @default(-1) @map("sgpa_be_sem_1")
+  sgpaBeSem2               Float?   @default(-1) @map("sgpa_be_sem_2")
   activeBacklogs           Int      @map("active_backlogs")
   activeBacklogSemesters   String[] @map("active_backlog_semesters")
   passiveBacklogs          Int      @map("passive_backlogs")
@@ -123,10 +128,12 @@ model Student {
   beReceiptURL             String   @map("be_receipt_url")
   password                 String   @map("password")
   isVerified               Boolean  @default(false) @map("is_verified")
+  cgpa                     Int?     @default(-1) @map("cgpa")
   createdAt                DateTime @default(now()) @map("created_at")
   updatedAt                DateTime @updatedAt @map("updated_at")
 
-  tokens StudentToken[]
+  tokens       StudentToken[]
+  applications Application[]
 
   @@map("students")
 }
@@ -142,4 +149,20 @@ model StudentToken {
 
   @@index([studentId])
   @@map("student_tokens")
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  studentId String   @map("student_id")
+  jobId     String   @map("job_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  job     Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, jobId])
+  @@index([studentId])
+  @@index([jobId])
+  @@map("applications")
 }

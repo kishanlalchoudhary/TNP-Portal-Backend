@@ -4,17 +4,28 @@ const {
   createAdmin,
   deleteAdmin,
 } = require("../docs/admin.doc");
-const { createJob, getJobs, getJob, deleteJob } = require("../docs/job.doc");
+const {
+  createJob,
+  getJobs,
+  getActiveJobs,
+  getJob,
+  deleteJob,
+  applyToJob,
+  appliedStudents,
+  downloadAppliedStudentsCSV,
+} = require("../docs/job.doc");
 const {
   registerStudent,
   loginStudent,
   logoutStudent,
   getUnverifiedStudents,
+  getVerifiedStudents,
   getStudent,
   verifyStudent,
   deleteStudent,
+  getProfile,
+  appliedJobs,
 } = require("../docs/student.doc");
-const { post } = require("../routes/student.route");
 
 const documentation = {
   openapi: "3.1.0",
@@ -47,14 +58,14 @@ const documentation = {
     },
   ],
   paths: {
+    "/admins": {
+      post: createAdmin,
+    },
     "/admins/login": {
       post: adminLogin,
     },
     "/admins/logout": {
       post: adminLogout,
-    },
-    "/admins": {
-      post: createAdmin,
     },
     "/admins/{id}": {
       delete: deleteAdmin,
@@ -63,28 +74,49 @@ const documentation = {
       post: createJob,
       get: getJobs,
     },
+    "/jobs/active": {
+      get: getActiveJobs,
+    },
     "/jobs/{id}": {
       get: getJob,
       delete: deleteJob,
     },
+    "/jobs/{id}/apply": {
+      post: applyToJob,
+    },
+    "/jobs/{id}/applied-students": {
+      get: appliedStudents,
+    },
+    "/jobs/{id}/applied-students/csv": {
+      get: downloadAppliedStudentsCSV,
+    },
     "/students": {
       post: registerStudent,
-    },
-    "/students/{id}": {
-      get: getStudent,
-      delete: deleteStudent,
-    },
-    "/students/unverified": {
-      get: getUnverifiedStudents,
-    },
-    "/students/{id}/verify": {
-      post: verifyStudent,
     },
     "/students/login": {
       post: loginStudent,
     },
     "/students/logout": {
       post: logoutStudent,
+    },
+    "/students/unverified": {
+      get: getUnverifiedStudents,
+    },
+    "/students/verified": {
+      get: getVerifiedStudents,
+    },
+    "/students/{id}": {
+      get: getStudent,
+      delete: deleteStudent,
+    },
+    "/students/{id}/verify": {
+      post: verifyStudent,
+    },
+    "/students/me/profile": {
+      get: getProfile,
+    },
+    "/students/me/applied-jobs": {
+      get: appliedJobs,
     },
   },
   components: {

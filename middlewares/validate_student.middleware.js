@@ -49,7 +49,7 @@ const validateStudentMiddleware = [
   body("percentage_10th")
     .notEmpty()
     .withMessage("10th percentage is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("10th percentage must be between 0 and 100"),
   body("board_10th").notEmpty().withMessage("10th board is required"),
   body("passing_year_10th")
@@ -70,7 +70,7 @@ const validateStudentMiddleware = [
   body("percentage_12th")
     .notEmpty()
     .withMessage("12th percentage is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("12th percentage must be between 0 and 100"),
   body("board_12th").notEmpty().withMessage("12th Board is required"),
   body("passing_year_12th")
@@ -81,7 +81,7 @@ const validateStudentMiddleware = [
   body("percentage_diploma")
     .notEmpty()
     .withMessage("diploma percentage is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("diploma percentage must be between 0 and 100"),
   body("university_of_diploma")
     .notEmpty()
@@ -94,12 +94,12 @@ const validateStudentMiddleware = [
   body("percentile_cet")
     .notEmpty()
     .withMessage("cet percentile is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("cet percentile must be between 0 and 100"),
   body("percentile_jee")
     .notEmpty()
     .withMessage("jee percentile is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("jee percentile must be between 0 and 100"),
   body("college_started_year")
     .notEmpty()
@@ -109,32 +109,32 @@ const validateStudentMiddleware = [
   body("sgpa_fe_sem_1")
     .notEmpty()
     .withMessage("fe sem 1 sgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("invalid fe sem 1 sgpa"),
   body("sgpa_fe_sem_2")
     .notEmpty()
     .withMessage("fe sem 2 sgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("invalid fe sem 2 sgpa"),
   body("sgpa_se_sem_1")
     .notEmpty()
     .withMessage("se sem 1 sgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("invalid se sem 1 sgpa"),
   body("sgpa_se_sem_2")
     .notEmpty()
     .withMessage("se sem 2 sgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("invalid se sem 2 sgpa"),
   body("sgpa_te_sem_1")
     .notEmpty()
     .withMessage("te sem 1 sgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("invalid te sem 1 sgpa"),
   body("sgpa_te_sem_2")
     .notEmpty()
     .withMessage("te sem 2 sgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("invalid te sem 2 sgpa"),
   body("active_backlogs")
     .notEmpty()

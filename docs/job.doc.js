@@ -62,33 +62,41 @@ const createJob = {
             cgpa: {
               type: "number",
               example: 8.5,
-              minimum: 0,
+              minimum: -1,
               maximum: 10,
             },
             automata_score: {
               type: "number",
               example: 75.0,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             elq_score: {
               type: "number",
               example: 80.0,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             percentage_10th: {
               type: "number",
               example: 85.0,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             percentage_12th: {
               type: "number",
               example: 88.0,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
+            percentage_diploma: {
+              type: "number",
+              example: 88.0,
+              minimum: -1,
+              maximum: 100,
+            },
+            active_backlogs: { type: "integer", example: 0 },
+            passive_backlogs: { type: "integer", example: 0 },
             application_deadline: {
               type: "string",
               format: "date-time",
@@ -107,6 +115,18 @@ const getJobs = {
   tags: ["Jobs"],
   description: "Get Jobs",
   operationId: "GetJobs",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
+const getActiveJobs = {
+  tags: ["Jobs"],
+  description: "Get Active Jobs",
+  operationId: "GetActiveJobs",
   security: [
     {
       bearerAuth: [],
@@ -163,4 +183,85 @@ const deleteJob = {
   responses: {},
 };
 
-module.exports = { createJob, getJobs, getJob, deleteJob };
+const applyToJob = {
+  tags: ["Jobs"],
+  description: "Apply To job",
+  operationId: "ApplyToJob",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const appliedStudents = {
+  tags: ["Jobs"],
+  description: "Applied Students",
+  operationId: "AppliedStudents",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const downloadAppliedStudentsCSV = {
+  tags: ["Jobs"],
+  description: "Download Applied Students CSV",
+  operationId: "DownloadAppliedStudentsCSV",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+module.exports = {
+  createJob,
+  getJobs,
+  getActiveJobs,
+  getJob,
+  deleteJob,
+  applyToJob,
+  appliedStudents,
+  downloadAppliedStudentsCSV,
+};

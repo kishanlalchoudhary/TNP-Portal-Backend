@@ -58,7 +58,7 @@ const registerStudent = {
             percentage_10th: {
               type: "number",
               example: 90.5,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             board_10th: { type: "string", example: "CBSE" },
@@ -73,14 +73,19 @@ const registerStudent = {
             percentage_12th: {
               type: "number",
               example: 85.2,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             board_12th: { type: "string", example: "Maharashtra State Board" },
             passing_year_12th: { type: "integer", example: 2018 },
             no_of_gap_years_after_12th: { type: "integer", example: 0 },
             reason_of_gap_after_12th: { type: "string", example: "N/A" },
-            percentage_diploma: { type: "number", example: 88.0 },
+            percentage_diploma: {
+              type: "number",
+              example: 88.0,
+              minimum: -1,
+              maximum: 100,
+            },
             university_of_diploma: { type: "string", example: "MSBTE" },
             passing_year_diploma: { type: "integer", example: 2019 },
             no_of_gap_years_after_diploma: { type: "integer", example: 0 },
@@ -88,22 +93,52 @@ const registerStudent = {
             percentile_cet: {
               type: "number",
               example: 95.0,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             percentile_jee: {
               type: "number",
               example: 90.0,
-              minimum: 0,
+              minimum: -1,
               maximum: 100,
             },
             college_started_year: { type: "integer", example: 2019 },
-            sgpa_fe_sem_1: { type: "number", example: 8.5 },
-            sgpa_fe_sem_2: { type: "number", example: 8.7 },
-            sgpa_se_sem_1: { type: "number", example: 8.8 },
-            sgpa_se_sem_2: { type: "number", example: 9.0 },
-            sgpa_te_sem_1: { type: "number", example: 9.1 },
-            sgpa_te_sem_2: { type: "number", example: 9.2 },
+            sgpa_fe_sem_1: {
+              type: "number",
+              example: 8.5,
+              minimum: -1,
+              maximum: 10,
+            },
+            sgpa_fe_sem_2: {
+              type: "number",
+              example: 8.7,
+              minimum: -1,
+              maximum: 10,
+            },
+            sgpa_se_sem_1: {
+              type: "number",
+              example: 8.8,
+              minimum: -1,
+              maximum: 10,
+            },
+            sgpa_se_sem_2: {
+              type: "number",
+              example: 9.0,
+              minimum: -1,
+              maximum: 10,
+            },
+            sgpa_te_sem_1: {
+              type: "number",
+              example: 9.1,
+              minimum: -1,
+              maximum: 10,
+            },
+            sgpa_te_sem_2: {
+              type: "number",
+              example: 9.2,
+              minimum: -1,
+              maximum: 10,
+            },
             active_backlogs: { type: "integer", example: 0 },
             active_backlog_semesters: {
               type: "array",
@@ -185,6 +220,18 @@ const getUnverifiedStudents = {
   responses: {},
 };
 
+const getVerifiedStudents = {
+  tags: ["Students"],
+  description: "Get Verified Students",
+  operationId: "GetVerifiedStudents",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
 const getStudent = {
   tags: ["Students"],
   description: "Get Student",
@@ -236,7 +283,7 @@ const verifyStudent = {
 const deleteStudent = {
   tags: ["Students"],
   description: "Student Admin",
-  operationId: "studentAdmin",
+  operationId: "StudentAdmin",
   security: [
     {
       bearerAuth: [],
@@ -257,12 +304,39 @@ const deleteStudent = {
   responses: {},
 };
 
+const getProfile = {
+  tags: ["Students"],
+  description: "Get Profile",
+  operationId: "GetProfile",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
+const appliedJobs = {
+  tags: ["Students"],
+  description: "Applied Jobs",
+  operationId: "AppliedJobs",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
 module.exports = {
   registerStudent,
   loginStudent,
   logoutStudent,
   getUnverifiedStudents,
+  getVerifiedStudents,
   getStudent,
   verifyStudent,
   deleteStudent,
+  getProfile,
+  appliedJobs,
 };

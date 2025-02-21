@@ -27,28 +27,43 @@ const validateJobMiddleware = [
   body("cgpa")
     .notEmpty()
     .withMessage("cgpa is required")
-    .isFloat({ min: 0, max: 10 })
+    .isFloat({ min: -1, max: 10 })
     .withMessage("cgpa must be between 0 and 100"),
   body("automata_score")
     .notEmpty()
     .withMessage("automata score is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("automata score must be between 0 and 100"),
   body("elq_score")
     .notEmpty()
     .withMessage("elq score is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("elq score must be between 0 and 100"),
   body("percentage_10th")
     .notEmpty()
     .withMessage("10th percentage is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("10th percentage must be between 0 and 100"),
   body("percentage_12th")
     .notEmpty()
     .withMessage("12th percentage is required")
-    .isFloat({ min: 0, max: 100 })
+    .isFloat({ min: -1, max: 100 })
     .withMessage("12th percentage must be between 0 and 100"),
+  body("percentage_diploma")
+    .notEmpty()
+    .withMessage("diploma percentage is required")
+    .isFloat({ min: -1, max: 100 })
+    .withMessage("diploma percentage must be between 0 and 100"),
+  body("active_backlogs")
+    .notEmpty()
+    .withMessage("no of active backlogs is required")
+    .isInt({ min: 0 })
+    .withMessage("no of active backlogs must be an integer"),
+  body("passive_backlogs")
+    .notEmpty()
+    .withMessage("no of passive backlogs is required")
+    .isInt({ min: 0 })
+    .withMessage("no of passive backlogs must be an integer"),
   body("application_deadline")
     .notEmpty()
     .withMessage("application deadline is required"),
@@ -77,7 +92,7 @@ const validateJobMiddleware = [
       }
 
       return res.status(400).json({
-        success: false, 
+        success: false,
         message: "Job validation failed",
         errors: errors.array().map((err) => err.msg),
       });

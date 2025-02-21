@@ -5,9 +5,12 @@ const {
   loginStudent,
   logoutStudent,
   getUnverifiedStudents,
+  getVerifiedStudents,
   getStudent,
   verifyStudent,
   deleteStudent,
+  getProfile,
+  getAppliedJobs,
 } = require("../controllers/student.controller");
 const { adminAuthMiddleware } = require("../middlewares/admin_auth.middleware");
 const {
@@ -31,8 +34,11 @@ router.post(
 router.post("/login", loginStudent);
 router.post("/logout", studentAuthMiddleware, logoutStudent);
 router.get("/unverified", adminAuthMiddleware, getUnverifiedStudents);
+router.get("/verified", adminAuthMiddleware, getVerifiedStudents);
 router.get("/:id", adminAuthMiddleware, getStudent);
 router.post("/:id/verify", adminAuthMiddleware, verifyStudent);
 router.delete("/:id", adminAuthMiddleware, deleteStudent);
+router.get("/me/profile", studentAuthMiddleware, getProfile);
+router.get("/me/applied-jobs", studentAuthMiddleware, getAppliedJobs);
 
 module.exports = router;
