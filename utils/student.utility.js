@@ -10,9 +10,11 @@ const calculateCGPA = (student) => {
     student.sgpaBeSem2,
   ].filter((sgpa) => sgpa !== -1);
 
-  return semesters.length
-    ? semesters.reduce((a, b) => a + b, 0) / semesters.length
-    : 0;
+  if (!semesters.length) return 0;
+
+  const sum = semesters.reduce((acc, sgpa) => acc + sgpa, 0);
+  const cgpa = sum / semesters.length;
+  return parseFloat(cgpa.toFixed(2));
 };
 
 module.exports = { calculateCGPA };

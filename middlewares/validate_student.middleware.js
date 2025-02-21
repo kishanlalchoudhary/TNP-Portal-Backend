@@ -60,7 +60,7 @@ const validateStudentMiddleware = [
   body("no_of_gap_years_after_10th")
     .notEmpty()
     .withMessage("no of gap years after 10th is required")
-    .isInt({ min: 0 })
+    .isInt({ min: -1 })
     .withMessage("no of gap years after 10th must be an positive integer"),
   body("after_10th_appeared_for")
     .notEmpty()
@@ -139,12 +139,12 @@ const validateStudentMiddleware = [
   body("active_backlogs")
     .notEmpty()
     .withMessage("no of active backlogs is required")
-    .isInt({ min: 0 })
+    .isInt({ min: -1 })
     .withMessage("no of active backlogs must be an integer"),
   body("passive_backlogs")
     .notEmpty()
     .withMessage("no of passive backlogs is required")
-    .isInt({ min: 0 })
+    .isInt({ min: -1 })
     .withMessage("no of passive backlogs must be an integer"),
   body("year_down")
     .notEmpty()

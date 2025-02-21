@@ -57,12 +57,12 @@ const validateJobMiddleware = [
   body("active_backlogs")
     .notEmpty()
     .withMessage("no of active backlogs is required")
-    .isInt({ min: 0 })
+    .isInt({ min: -1 })
     .withMessage("no of active backlogs must be an integer"),
   body("passive_backlogs")
     .notEmpty()
     .withMessage("no of passive backlogs is required")
-    .isInt({ min: 0 })
+    .isInt({ min: -1 })
     .withMessage("no of passive backlogs must be an integer"),
   body("application_deadline")
     .notEmpty()
