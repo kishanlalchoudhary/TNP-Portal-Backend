@@ -17,7 +17,7 @@ const createJob = async (req, res) => {
         companyJdURL: req.files["company_jd"][0].path,
         companyPackage: parseFloat(req.body.company_package),
         dreamCompany: req.body.dream_company,
-        eligibleBranches: req.body.eligibleBranches
+        eligibleBranches: req.body.eligible_branches
           ? req.body.eligible_branches.split(",")
           : [],
         cgpa: parseFloat(req.body.cgpa),
