@@ -18,8 +18,22 @@ const uploadMiddleware = (folderName) => {
     },
   });
 
+  const fileFilter = (req, file, cb) => {
+    const allowedMimeTypes = ["image/jpeg", "image/png", "application/pdf"];
+
+    if (!allowedMimeTypes.includes(file.mimetype)) {
+      return cb(
+        new Error("Invalid file type. Only images and PDFs are allowed."),
+        false
+      );
+    }
+
+    cb(null, true);
+  };
+
   return multer({
     storage: storage,
+    fileFilter,
   });
 };
 
