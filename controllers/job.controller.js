@@ -99,12 +99,28 @@ const getActiveJobs = async (req, res) => {
 
 const getJob = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id: studentId } = req.student;
+    const { id: jobId } = req.params;
 
-    const job = await prisma.job.findUnique({ where: { id } });
+    const job = await prisma.job.findUnique({ where: { id: jobId } });
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
+
+    const student = await prisma.student.findUnique({
+      where: { id: studentId },
+    });
+    job.isEligible = isEligibleForJob(student, job);
+
+    const application = await prisma.application.findUnique({
+      where: {
+        studentId_jobId: {
+          studentId,
+          jobId,
+        },
+      },
+    });
+    job.hasApplied = application ? true : false;
 
     res
       .status(200)
