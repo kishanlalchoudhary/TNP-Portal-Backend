@@ -85,8 +85,12 @@ const validateJobMiddleware = [
 
     if (!errors.isEmpty()) {
       try {
-        await deleteFileFromCloudinary(req.files["company_logo"][0].path);
-        await deleteFileFromCloudinary(req.files["company_jd"][0].path);
+        if (req.files["company_logo"]) {
+          await deleteFileFromCloudinary(req.files["company_logo"][0].path);
+        }
+        if (req.files["company_jd"]) {
+          await deleteFileFromCloudinary(req.files["company_jd"][0].path);
+        }
       } catch (error) {
         console.error(error);
       }

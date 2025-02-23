@@ -25,6 +25,9 @@ const createJob = async (req, res) => {
         elqScore: parseFloat(req.body.elq_score),
         percentage10th: parseFloat(req.body.percentage_10th),
         percentage12th: parseFloat(req.body.percentage_12th),
+        percentageDiploma: parseFloat(req.body.percentage_diploma),
+        activeBacklogs: parseInt(req.body.active_backlogs),
+        passiveBacklogs: parseInt(req.body.passive_backlogs),
         applicationDeadline: new Date(req.body.application_deadline),
       },
     });

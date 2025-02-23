@@ -190,9 +190,17 @@ const validateStudentMiddleware = [
 
     if (!errors.isEmpty()) {
       try {
-        await deleteFileFromCloudinary(req.files["documents"][0].path);
-        await deleteFileFromCloudinary(req.files["amcat_result"][0].path);
-        await deleteFileFromCloudinary(req.files["be_receipt"][0].path);
+        if (req.files["documents"]) {
+          await deleteFileFromCloudinary(req.files["documents"][0].path);
+        }
+
+        if (req.files["amcat_result"]) {
+          await deleteFileFromCloudinary(req.files["amcat_result"][0].path);
+        }
+
+        if (req.files["be_receipt"]) {
+          await deleteFileFromCloudinary(req.files["be_receipt"][0].path);
+        }
       } catch (error) {
         console.error(error);
       }
