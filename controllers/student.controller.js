@@ -403,3 +403,31 @@ module.exports = {
   getProfile,
   getAppliedJobs,
 };
+
+const getStudentNotifications = async (req, res) => {
+  try {
+    const { id } = req.student; 
+
+    const notifications = await prisma.notification.findMany({
+      where: {
+        students: {
+          some: {
+            id
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Notifications fetched successfully",
+      notifications
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};

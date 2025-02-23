@@ -13,6 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Notification {
+  id           String   @id @default(cuid())
+  title        String   @map("title")
+  description  String   @map("description")
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  // Relation to students who received this notification
+  students     Student[] @relation("StudentNotifications")
+
+  @@map("notifications")
+}
+
 model Admin {
   id        String   @id @default(cuid())
   firstName String   @map("first_name")
@@ -134,6 +146,7 @@ model Student {
   cgpa                     Float    @default(-1) @map("cgpa")
   createdAt                DateTime @default(now()) @map("created_at")
   updatedAt                DateTime @updatedAt @map("updated_at")
+  notifications Notification[] @relation("StudentNotifications")
 
   tokens       StudentToken[]
   applications Application[]
