@@ -26,6 +26,14 @@ const {
   getProfile,
   appliedJobs,
 } = require("../docs/student.doc");
+const {
+  addSkill,
+  getSkills,
+  removeSkill,
+  getQuestions,
+  evaluateAnswers,
+} = require("../docs/skill.doc");
+const { post, get } = require("../routes/skill.route");
 
 const documentation = {
   openapi: "3.1.0",
@@ -55,6 +63,10 @@ const documentation = {
     {
       name: "Students",
       description: "APIs related to student management",
+    },
+    {
+      name: "Skills",
+      description: "APIs related to skill management",
     },
   ],
   paths: {
@@ -117,6 +129,19 @@ const documentation = {
     },
     "/students/me/applied-jobs": {
       get: appliedJobs,
+    },
+    "/skills": {
+      post: addSkill,
+      get: getSkills,
+    },
+    "/skills/{id}": {
+      delete: removeSkill,
+    },
+    "/skills/{id}/questions": {
+      get: getQuestions,
+    },
+    "/skills/{id}/evaluations": {
+      post: evaluateAnswers,
     },
   },
   components: {
