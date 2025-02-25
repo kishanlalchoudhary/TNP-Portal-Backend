@@ -183,3 +183,11 @@ model Application {
   @@index([jobId])
   @@map("applications")
 }
+
+model Skill {
+  id      String @id @default(cuid())
+  name    String @unique @map("name")
+  logoURL String @map("logo_url")
+
+  @@map("skills")
+}
