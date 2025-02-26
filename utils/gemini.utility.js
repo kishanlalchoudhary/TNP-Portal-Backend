@@ -24,10 +24,10 @@ const getQuestionsFromGemini = async (skill) => {
     - Concise, clear, and unambiguous.
     - Answerable within a maximum of 250 words.
 
-    ### **Output Format Requirement:**
-    Strictly return a valid JSON object with a key **"questions"**, containing an array of question objects.
+    ### Output Format Requirement:
+    Strictly return a valid JSON object with a key "questions", containing an array of question objects.
 
-    #### **Example Output:**
+    #### Example Output:
     \`\`\`json
     {
       "questions": [
@@ -41,7 +41,7 @@ const getQuestionsFromGemini = async (skill) => {
     }
     \`\`\`
 
-    **Important:**  
+    Important: 
     - Do not include any additional text, explanations, or formatting outside the JSON object.  
     - Ensure that the JSON output is correctly formatted and parseable.  
     `;
@@ -55,40 +55,40 @@ const getQuestionsFromGemini = async (skill) => {
 
 const evaluateQuestionsFromGemini = async (skill, questions) => {
   try {
-    const prompt = `You are an AI that evaluates **${skill.name}** interview questions. Given a list of questions and their corresponding answers, evaluate the quality of each question by providing the following:
+    const prompt = `You are an AI that evaluates ${skill.name} interview questions. Given a list of questions and their corresponding answers, evaluate the quality of each question by providing the following:
 
     - A rating (1 to 10) based on how well the question tests relevant skills.
     - The correct answer for each question.
     - Plagiarism check as a percentage (0 to 100) based on the user's provided answer.
     - Feedback on each question’s clarity, conciseness, and relevance.
 
-    ### **Input Format**:
-    Provide the **"questions"** key, containing an array of question objects. Each object contains:
-    - **question**: the interview question.
-    - **answer**: the answer provided by the user.
-    - **difficulty**: the difficulty level (easy, medium, or hard).
+    ### Input Format:
+    Provide the "questions" key, containing an array of question objects. Each object contains:
+    - question: the interview question.
+    - answer: the answer provided by the user.
+    - difficulty: the difficulty level (easy, medium, or hard).
 
     Questions not related to ${skill.name} should not be evaluated.
 
-    ### **Output Format Requirement**:
+    ### Output Format Requirement:
     Strictly return a valid JSON object with a key **"evaluations"**, containing an array of evaluation objects. Each object should have:
-    - **question**: the interview question.
-    - **correct_answer**: the correct answer to the question.
-    - **rating**: rating (1 to 10).
-    - **plagiarism**: plagiarism percentage (0 to 100).
+    - question: the interview question.
+    - correct_answer: the correct answer to the question.
+    - rating: rating (1 to 10).
+    - plagiarism: plagiarism percentage (0 to 100).
 
     Additionally, return:
-    - **overall_rating**: an average rating across all questions.
-    - **topics_to_improve**: any topics or areas the candidate could focus on to improve.
+    - overall_rating: an average rating across all questions.
+    - topics_to_improve: any topics or areas the candidate could focus on to improve.
 
-    #### **Example Input**:
+    #### Example Input:
     \`\`\`json
     {
       "questions": ${questions}
     }
     \`\`\`
 
-    #### **Example Output**:
+    #### Example Output:
     \`\`\`json
     {
       "evaluations": [
@@ -110,8 +110,7 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
     }
     \`\`\`
 
-    **Important**:
-    - If the **skill_name** does not match the skill required for a question, do not provide an evaluation for that question.
+    Important:
     - Do not include any additional text or explanations outside the JSON object.
     - Ensure that the JSON output is correctly formatted and parseable.
     `;
