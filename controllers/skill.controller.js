@@ -1,6 +1,9 @@
 const prisma = require("../config/prisma");
 const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
-const { getQuestionsFromGemini } = require("../utils/gemini.utility");
+const {
+  getQuestionsFromGemini,
+  evaluateQuestionsFromGemini,
+} = require("../utils/gemini.utility");
 
 const addSkill = async (req, res) => {
   try {
@@ -80,12 +83,12 @@ const getQuestions = async (req, res) => {
         .json({ success: false, message: "Skill not found" });
     }
 
-    const questions = await getQuestionsFromGemini(skill);
+    const response = await getQuestionsFromGemini(skill);
 
     res.status(200).json({
       success: true,
       message: "Questions fetched successfully",
-      questions: questions,
+      questions: response.questions,
     });
   } catch (error) {
     console.error(error);
@@ -93,7 +96,32 @@ const getQuestions = async (req, res) => {
   }
 };
 
-const evaluateAnswers = async (req, res) => {};
+const evaluateAnswers = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { questions } = req.body;
+
+    const skill = await prisma.skill.findUnique({ where: { id } });
+    if (!skill) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Skill not found" });
+    }
+
+    const response = await evaluateQuestionsFromGemini(skill, questions);
+
+    res.status(200).json({
+      success: true,
+      message: "Evaluation for each question fetched successfully",
+      evaluations: response.evaluations,
+      overall_rating: response.overall_rating,
+      topics_to_improve: response.topics_to_improve,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
 
 module.exports = {
   addSkill,
