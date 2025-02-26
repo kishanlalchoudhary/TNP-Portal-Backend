@@ -25,7 +25,7 @@ const getQuestionsFromGemini = async (skill) => {
     - Answerable within a maximum of 250 words.
 
     ### Output Format Requirement:
-    Strictly return a valid JSON object with a key "questions", containing an array of question objects.
+    Strictly return a valid JSON object with a key "questions", containing an array of objects having keys question and difficulty.
 
     #### Example Output:
     \`\`\`json
@@ -55,13 +55,18 @@ const getQuestionsFromGemini = async (skill) => {
 
 const evaluateQuestionsFromGemini = async (skill, questions) => {
   try {
-    const prompt = `You are an AI expert in technical topics such as OOPs, DSA, and programming concepts.
-    Also, you are an expert HR that can validate personality Development questions too.
+    const prompt = `You are an AI that evaluates candidate responses in ${
+      skill.name
+    } interviews. Given a list of questions, responses, and difficulty levels, your task is to assess the accuracy, completeness, and relevance of each answer and provide structured feedback.
 
-    - A rating (1 to 10) based on how well are the answers provided in the input.
-    - The correct answer for each question.
-    - Plagiarism check as a percentage (0 to 100) based on the user's provided answer.
-    - Feedback on each question’s clarity, conciseness, and relevance.
+    ### Evaluation Criteria:  
+    For each response, compare it against the correct answer and assign a rating based on the following scale:  
+
+    - 10: Fully correct, complete, and well-explained.  
+    - 7-9: Mostly correct, with minor missing details or slight inaccuracies.  
+    - 4-6: Partially correct but missing key concepts or explanations.  
+    - 1-3: Largely incorrect, vague, or containing misconceptions.  
+    - 0: Completely incorrect, unrelated, or blank.  
 
     ### Input Format:
     Provide the "questions" key, containing an array of question objects. Each object contains:
@@ -74,16 +79,16 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
     - question: the interview question.
     - correct_answer: the correct answer to the question.
     - rating: rating (1 to 10).
-    - plagiarism: plagiarism percentage (0 to 100).
+    - plagiarism: contains combined score that includes both AI generation likelihood and plagiarism percentage. It represents the percentage (0 to 100) indicating how much the answer matches AI-generated content and/or existing sources.
 
     Additionally, return:
     - overall_rating: an average rating across all questions.
     - topics_to_improve: any topics or areas the candidate could focus on to improve.
 
-    #### Example Input:
+    #### Input:
     \`\`\`json
     {
-      "questions": ${questions}
+      "questions": ${JSON.stringify(questions, null, 2)}
     }
     \`\`\`
 
@@ -101,7 +106,7 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
           "question": "Explain the difference between a primary key and a foreign key. Provide a real-world example.",
           "correct_answer": "A primary key is a unique identifier for each record in a table, ensuring that no two rows have the same value for that key. A foreign key, on the other hand, is a field in one table that links to the primary key of another table, establishing a relationship between them. For example, in a library system, the 'Books' table may have a 'Book_ID' as the primary key. In the 'Borrowed_Books' table, the 'Book_ID' can act as a foreign key, referencing the 'Books' table to track which books are borrowed by which students.",
           "rating": 8,
-          "plagiarism": 0
+          "plagiarism": 5
         }
       ],
       "overall_rating": 8.5,
