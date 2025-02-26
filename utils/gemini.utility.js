@@ -55,13 +55,10 @@ const getQuestionsFromGemini = async (skill) => {
 
 const evaluateQuestionsFromGemini = async (skill, questions) => {
   try {
-    const prompt = `You are an AI that evaluates candidate responses in ${
-      skill.name
-    } interviews. Given a list of questions, responses, and difficulty levels, your task is to assess the accuracy, completeness, and relevance of each answer and provide structured feedback.
+    const prompt = `You are an AI that evaluates candidate responses in ${skill.name} interviews. Given a list of questions, responses, and difficulty levels, your task is to assess the accuracy, completeness, and relevance of each answer and provide structured feedback.
 
     ### Evaluation Criteria:  
     For each response, compare it against the correct answer and assign a rating based on the following scale:  
-
     - 10: Fully correct, complete, and well-explained.  
     - 7-9: Mostly correct, with minor missing details or slight inaccuracies.  
     - 4-6: Partially correct but missing key concepts or explanations.  
