@@ -55,9 +55,10 @@ const getQuestionsFromGemini = async (skill) => {
 
 const evaluateQuestionsFromGemini = async (skill, questions) => {
   try {
-    const prompt = `You are an AI that evaluates ${skill.name} interview questions. Given a list of questions and their corresponding answers, evaluate the quality of each question by providing the following:
+    const prompt = `You are an AI expert in technical topics such as OOPs, DSA, and programming concepts.
+    Also, you are an expert HR that can validate personality Development questions too.
 
-    - A rating (1 to 10) based on how well the question tests relevant skills.
+    - A rating (1 to 10) based on how well are the answers provided in the input.
     - The correct answer for each question.
     - Plagiarism check as a percentage (0 to 100) based on the user's provided answer.
     - Feedback on each question’s clarity, conciseness, and relevance.
@@ -68,10 +69,8 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
     - answer: the answer provided by the user.
     - difficulty: the difficulty level (easy, medium, or hard).
 
-    Questions not related to ${skill.name} should not be evaluated.
-
     ### Output Format Requirement:
-    Strictly return a valid JSON object with a key **"evaluations"**, containing an array of evaluation objects. Each object should have:
+    Strictly return a valid JSON object with a key "evaluations", containing an array of evaluation objects. Each object should have:
     - question: the interview question.
     - correct_answer: the correct answer to the question.
     - rating: rating (1 to 10).
