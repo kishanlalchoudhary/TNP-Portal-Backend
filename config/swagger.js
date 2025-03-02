@@ -33,7 +33,12 @@ const {
   getQuestions,
   evaluateAnswers,
 } = require("../docs/skill.doc");
-const { post, get } = require("../routes/skill.route");
+const {
+  raiseQuery,
+  getQueries,
+  getSummaryOfQueries,
+  deleteQuery,
+} = require("../docs/query.doc");
 
 const documentation = {
   openapi: "3.1.0",
@@ -67,6 +72,10 @@ const documentation = {
     {
       name: "Skills",
       description: "APIs related to skill management",
+    },
+    {
+      name: "Queries",
+      description: "APIs related to help and support query management",
     },
   ],
   paths: {
@@ -142,6 +151,16 @@ const documentation = {
     },
     "/skills/{id}/evaluations": {
       post: evaluateAnswers,
+    },
+    "/queries": {
+      post: raiseQuery,
+      get: getQueries,
+    },
+    "/queries/summary": {
+      get: getSummaryOfQueries,
+    },
+    "/queries/{id}": {
+      delete: deleteQuery,
     },
   },
   components: {
