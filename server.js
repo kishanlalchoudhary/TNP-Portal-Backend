@@ -44,6 +44,7 @@ app.use("/api/v1/admins", require("./routes/admin.route"));
 app.use("/api/v1/jobs", require("./routes/job.route"));
 app.use("/api/v1/students", require("./routes/student.route"));
 app.use("/api/v1/skills", require("./routes/skill.route"));
+app.use("/api/v1/queries", require("./routes/query.route"));
 
 process.on("SIGINT", async () => {
   await prisma.$disconnect();

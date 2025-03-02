@@ -55,7 +55,10 @@ const getQuestionsFromGemini = async (skill) => {
 
 const evaluateQuestionsFromGemini = async (skill, questions) => {
   try {
-    const prompt = `You are an AI that evaluates candidate responses in ${skill.name} interviews. Given a list of questions, responses, and difficulty levels, your task is to assess the accuracy, completeness, and relevance of each answer and provide structured feedback.
+    const prompt = `You are an AI that evaluates candidate responses in ${skill.name} interviews. 
+    
+    ### Task:
+    Given a list of questions, responses, and difficulty levels, your task is to assess the accuracy, completeness, and relevance of each answer and provide structured feedback.
 
     ### Evaluation Criteria:  
     For each response, compare it against the correct answer and assign a rating based on the following scale:  
@@ -81,14 +84,7 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
     Additionally, return:
     - overall_rating: an average rating across all questions.
     - topics_to_improve: any topics or areas the candidate could focus on to improve.
-
-    #### Input:
-    \`\`\`json
-    {
-      "questions": ${JSON.stringify(questions, null, 2)}
-    }
-    \`\`\`
-
+    
     #### Example Output:
     \`\`\`json
     {
@@ -110,6 +106,14 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
       "topics_to_improve": ["Database Normalization", "ACID Properties"]
     }
     \`\`\`
+    
+    #### Input:
+    \`\`\`json
+    {
+      "questions": ${JSON.stringify(questions, null, 2)}
+    }
+    \`\`\`
+
 
     Important:
     - Do not include any additional text or explanations outside the JSON object.
@@ -123,4 +127,45 @@ const evaluateQuestionsFromGemini = async (skill, questions) => {
   }
 };
 
-module.exports = { getQuestionsFromGemini, evaluateQuestionsFromGemini };
+const getSummaryOfQueriesFromGemini = async (queries) => {
+  try {
+    const prompt = `You are an AI that summarizes help and support queries.
+    
+    ### Task:
+    Given a list of help and support queries, generate a summary in paragraph format (150-250 words).
+
+    ### Output Format Requirement:
+    Return a valid JSON object containing:
+    - "summary": A paragraph (150-250 words) summarizing the queries.
+
+    #### Example Output:
+    \`\`\`json
+    {
+      "summary": "Several students are experiencing technical difficulties during the Goggle OA, impacting their ability to complete the test. A recurring issue involves login problems, where students face endless loading screens when attempting to access the portal, despite trying different browsers and networks. Lag in the coding editor is another prevalent concern, with students reporting delays in typing and clicking, hindering their coding progress. Some students are unable to start the coding portion of the test, encountering a blank screen upon clicking 'Start Test'. Furthermore, display issues, such as corrupted question formats with multiple-choice options appearing as a single string, are affecting test completion. Timer malfunctions, where the countdown doesn't update in real-time, add to the confusion. Browser-specific rendering problems, particularly in Chrome, are also reported."
+    }
+    \`\`\`
+
+    #### Input:
+    \`\`\`json
+    {
+      "queries": ${JSON.stringify(queries, null, 2)}
+    }
+    \`\`\`
+
+    Important:
+    - Do not include any additional text or explanations outside the JSON object.
+    - Ensure that the JSON output is correctly formatted and parseable.
+    `;
+
+    const response = await model.invoke(prompt);
+    return convertToJSON(response);
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = {
+  getQuestionsFromGemini,
+  evaluateQuestionsFromGemini,
+  getSummaryOfQueriesFromGemini,
+};

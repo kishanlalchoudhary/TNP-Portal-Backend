@@ -137,6 +137,7 @@ model Student {
 
   tokens       StudentToken[]
   applications Application[]
+  queries      Query[]
 
   @@index([cgpa])
   @@map("students")
@@ -177,4 +178,17 @@ model Skill {
   logoURL String @map("logo_url")
 
   @@map("skills")
+}
+
+model Query {
+  id          String   @id @default(cuid())
+  studentId   String   @map("student_id")
+  description String   @map("description")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([createdAt])
+  @@map("queries")
 }
