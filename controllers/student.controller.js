@@ -391,18 +391,6 @@ const getAppliedJobs = async (req, res) => {
   }
 };
 
-module.exports = {
-  registerStudent,
-  loginStudent,
-  logoutStudent,
-  getUnverifiedStudents,
-  getVerifiedStudents,
-  getStudent,
-  verifyStudent,
-  deleteStudent,
-  getProfile,
-  getAppliedJobs,
-};
 
 const getStudentNotifications = async (req, res) => {
   try {
@@ -430,4 +418,18 @@ const getStudentNotifications = async (req, res) => {
     console.error(error);
     res.status(500).json({ success: false, message: "Something went wrong" });
   }
+};
+
+module.exports = {
+  registerStudent,
+  loginStudent,
+  logoutStudent,
+  getUnverifiedStudents,
+  getVerifiedStudents,
+  getStudent,
+  verifyStudent,
+  deleteStudent,
+  getProfile,
+  getAppliedJobs,
+  getStudentNotifications
 };

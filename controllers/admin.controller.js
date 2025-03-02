@@ -132,12 +132,6 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
-module.exports = {
-  adminLogin,
-  adminLogout,
-  createAdmin,
-  deleteAdmin,
-};
 
 const createNotification = async (req, res) => {
   try {
@@ -165,3 +159,40 @@ const createNotification = async (req, res) => {
   }
 };
 
+const deleteNotification = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const notification = await prisma.notification.findUnique({
+      where: { id }
+    });
+
+    if (!notification) {
+      return res.status(404).json({
+        success: false,
+        message: "Notification not found"
+      });
+    }
+
+    await prisma.notification.delete({
+      where: { id }
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Notification deleted successfully"
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+module.exports = {
+  adminLogin,
+  adminLogout,
+  createAdmin,
+  deleteAdmin,
+  createNotification,
+  deleteNotification
+};

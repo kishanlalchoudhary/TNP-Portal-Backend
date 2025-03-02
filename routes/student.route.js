@@ -11,6 +11,7 @@ const {
   deleteStudent,
   getProfile,
   getAppliedJobs,
+  getStudentNotifications
 } = require("../controllers/student.controller");
 const { adminAuthMiddleware } = require("../middlewares/admin_auth.middleware");
 const {
@@ -40,5 +41,7 @@ router.delete("/:id", adminAuthMiddleware, deleteStudent);
 router.post("/:id/verify", adminAuthMiddleware, verifyStudent);
 router.get("/me/profile", studentAuthMiddleware, getProfile);
 router.get("/me/applied-jobs", studentAuthMiddleware, getAppliedJobs);
+router.get("/me/get-notifications", studentAuthMiddleware, getStudentNotifications );
+
 
 module.exports = router;
