@@ -15,7 +15,8 @@ const raiseQuery = {
           properties: {
             description: {
               type: "string",
-              example: "John",
+              example:
+                "I am encountering an issue when trying to log in to the Goggle OA portal. The page keeps loading endlessly, and I am unable to access the test page. I’ve tried using different browsers, clearing my browser cache, and even changing networks, but the issue remains.",
             },
           },
         },
