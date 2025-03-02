@@ -340,6 +340,64 @@ const appliedJobs = {
   responses: {},
 };
 
+const getStudentNotifications = {
+  tags: ["Notifications"],
+  description: "Get Notifications for Current Student",
+  operationId: "GetStudentNotifications",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {
+    "200": {
+      description: "Notifications fetched successfully",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              message: {
+                type: "string",
+                example: "Notifications fetched successfully",
+              },
+              notifications: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                      example: "cm6lqlr0k0002vp0vzd0t3nzj",
+                    },
+                    title: {
+                      type: "string",
+                      example: "Important Placement Update",
+                    },
+                    description: {
+                      type: "string",
+                      example: "New job opportunity from XYZ Company. Register by March 10th.",
+                    },
+                    createdAt: {
+                      type: "string",
+                      format: "date-time",
+                      example: "2025-03-02T12:00:00.000Z",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
 module.exports = {
   registerStudent,
   loginStudent,
@@ -351,4 +409,5 @@ module.exports = {
   deleteStudent,
   getProfile,
   appliedJobs,
+  getStudentNotifications,
 };
