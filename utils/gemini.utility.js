@@ -132,11 +132,11 @@ const getSummaryOfQueriesFromGemini = async (queries) => {
     const prompt = `You are an AI that summarizes help and support queries.
     
     ### Task:
-    Given a list of help and support queries, generate a summary in paragraph format (150-250 words).
+    Given a list of help and support queries, generate a summary in paragraph format (50-100 words).
 
     ### Output Format Requirement:
     Return a valid JSON object containing:
-    - "summary": A paragraph (150-250 words) summarizing the queries.
+    - "summary": A paragraph (50-100 words) summarizing the queries.
 
     #### Example Output:
     \`\`\`json
