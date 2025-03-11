@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const config = require("../config/env");
 const jwt = require("jsonwebtoken");
 const { calculateCGPA } = require("../utils/student.utility");
+const { sendStudentVerifiedEmail } = require("../utils/email.utility");
 
 const registerStudent = async (req, res) => {
   try {
@@ -274,6 +275,8 @@ const verifyStudent = async (req, res) => {
       where: { id },
       data: { isVerified: true, cgpa },
     });
+
+    await sendStudentVerifiedEmail(student.primaryEmail);
 
     res
       .status(200)
