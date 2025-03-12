@@ -5,6 +5,7 @@ const {
   getQueries,
   getSummaryOfQueries,
   deleteQuery,
+  replyQuery,
 } = require("../controllers/query.controller");
 const {
   studentAuthMiddleware,
@@ -18,5 +19,6 @@ router.post("/", studentAuthMiddleware, validateQueryMiddleware, raiseQuery);
 router.get("/", adminAuthMiddleware, getQueries);
 router.get("/summary", adminAuthMiddleware, getSummaryOfQueries);
 router.delete("/:id", adminAuthMiddleware, deleteQuery);
+router.post("/:id/reply", adminAuthMiddleware, replyQuery);
 
 module.exports = router;

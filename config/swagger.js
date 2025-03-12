@@ -38,6 +38,7 @@ const {
   getQueries,
   getSummaryOfQueries,
   deleteQuery,
+  replyQuery
 } = require("../docs/query.doc");
 
 const documentation = {
@@ -161,6 +162,9 @@ const documentation = {
     },
     "/queries/{id}": {
       delete: deleteQuery,
+    },
+    "queries/{id}/reply": {
+      post: replyQuery,
     },
   },
   components: {

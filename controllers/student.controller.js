@@ -276,7 +276,7 @@ const verifyStudent = async (req, res) => {
       data: { isVerified: true, cgpa },
     });
 
-    await sendStudentVerifiedEmail(student.primaryEmail);
+    await sendStudentVerifiedEmail({ email: student.primaryEmail });
 
     res
       .status(200)
