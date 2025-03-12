@@ -75,9 +75,51 @@ const deleteQuery = {
   responses: {},
 };
 
+const replyQuery = {
+  tags: ["Queries"],
+  description: "Reply Query",
+  operationId: "ReplyQuery",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Query Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            reply: {
+              type: "string",
+              example:
+                "Please try using incognito mode, disabling any VPN/proxy, and ensuring your system time is correct. If the issue persists, try accessing the portal from another device or contact Google support for further assistance.",
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
 module.exports = {
   raiseQuery,
   getQueries,
   getSummaryOfQueries,
   deleteQuery,
+  replyQuery,
 };
