@@ -163,7 +163,7 @@ const documentation = {
     "/queries/{id}": {
       delete: deleteQuery,
     },
-    "queries/{id}/reply": {
+    "/queries/{id}/reply": {
       post: replyQuery,
     },
   },
