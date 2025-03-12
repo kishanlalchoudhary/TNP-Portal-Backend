@@ -155,6 +155,7 @@ const sendQueryReplyEmail = async ({ email, query, reply }) => {
             .query-box,
             .reply-box {
               background: #f4f4f4;
+              color: rgba(8, 30, 127, 0.602);
               padding: 10px;
               border-left: 4px solid #081e7f;
               margin: 10px 0;
