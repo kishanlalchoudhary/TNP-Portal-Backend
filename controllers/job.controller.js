@@ -97,6 +97,38 @@ const getActiveJobs = async (req, res) => {
   }
 };
 
+const getInactiveJobs = async (req, res) => {
+  try {
+    const jobs = await prisma.job.findMany({
+      where: {
+        applicationDeadline: {
+          lt: new Date(),
+        },
+      },
+      select: {
+        id: true,
+        companyLogoURL: true,
+        companyName: true,
+        jobRole: true,
+        jobLocation: true,
+        companyPackage: true,
+        dreamCompany: true,
+        applicationDeadline: true,
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Inactive Jobs fetched successfully",
+      jobs,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
 const getJob = async (req, res) => {
   try {
     const { id: studentId } = req.student;
@@ -299,6 +331,7 @@ module.exports = {
   createJob,
   getJobs,
   getActiveJobs,
+  getInactiveJobs,
   getJob,
   deleteJob,
   applyToJob,

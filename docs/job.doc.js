@@ -135,6 +135,18 @@ const getActiveJobs = {
   responses: {},
 };
 
+const getInactiveJobs = {
+  tags: ["Jobs"],
+  description: "Get Inctive Jobs",
+  operationId: "GetInactiveJobs",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  responses: {},
+};
+
 const getJob = {
   tags: ["Jobs"],
   description: "Get Job",
@@ -259,6 +271,7 @@ module.exports = {
   createJob,
   getJobs,
   getActiveJobs,
+  getInactiveJobs,
   getJob,
   deleteJob,
   applyToJob,
