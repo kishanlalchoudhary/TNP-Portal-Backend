@@ -8,6 +8,7 @@ const {
   createJob,
   getJobs,
   getActiveJobs,
+  getInactiveJobs,
   getJob,
   deleteJob,
   applyToJob,
@@ -38,7 +39,7 @@ const {
   getQueries,
   getSummaryOfQueries,
   deleteQuery,
-  replyQuery
+  replyQuery,
 } = require("../docs/query.doc");
 
 const documentation = {
@@ -98,6 +99,9 @@ const documentation = {
     },
     "/jobs/active": {
       get: getActiveJobs,
+    },
+    "/jobs/inactive": {
+      get: getInactiveJobs,
     },
     "/jobs/{id}": {
       get: getJob,

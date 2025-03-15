@@ -4,6 +4,7 @@ const {
   createJob,
   getJobs,
   getActiveJobs,
+  getInactiveJobs,
   getJob,
   deleteJob,
   applyToJob,
@@ -31,6 +32,7 @@ router.post(
 );
 router.get("/", adminAuthMiddleware, getJobs);
 router.get("/active", studentAuthMiddleware, getActiveJobs);
+router.get("/inactive", studentAuthMiddleware, getInactiveJobs);
 router.get("/:id", studentAuthMiddleware, getJob);
 router.delete("/:id", adminAuthMiddleware, deleteJob);
 router.post("/:id/apply", studentAuthMiddleware, applyToJob);
