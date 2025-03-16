@@ -347,8 +347,6 @@ const getProfile = async (req, res) => {
         cgpa: true,
         isPlaced: true,
         isDreamPlaced: true,
-      },
-      include: {
         placedJob: {
           select: {
             id: true,
