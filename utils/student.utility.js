@@ -18,7 +18,13 @@ const calculateCGPA = (student) => {
 };
 
 const isEligibleForJob = (student, job) => {
-  if (student.yearDown === "Yes") return false;
+  if (
+    student.yearDown === "Yes" ||
+    (student.isPlaced === true && job.dreamCompany === "No") ||
+    student.isDreamPlaced
+  ) {
+    return false;
+  }
 
   const criteria = [
     { jobValue: job.cgpa, studentValue: student.cgpa },
