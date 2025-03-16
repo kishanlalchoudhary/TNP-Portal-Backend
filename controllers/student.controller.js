@@ -345,6 +345,19 @@ const getProfile = async (req, res) => {
         automataScore: true,
         elqScore: true,
         cgpa: true,
+        isPlaced: true,
+        isDreamPlaced: true,
+      },
+      include: {
+        placedJob: {
+          select: {
+            id: true,
+            companyLogoURL: true,
+            companyName: true,
+            companyPackage: true,
+            dreamCompany: true,
+          },
+        },
       },
     });
 
