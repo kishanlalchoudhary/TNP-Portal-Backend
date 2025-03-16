@@ -354,6 +354,8 @@ const getProfile = async (req, res) => {
             id: true,
             companyLogoURL: true,
             companyName: true,
+            jobRole: true,
+            jobLocation: true,
             companyPackage: true,
             dreamCompany: true,
           },
