@@ -65,7 +65,8 @@ model Job {
   createdAt           DateTime @default(now()) @map("created_at")
   updatedAt           DateTime @updatedAt @map("updated_at")
 
-  applications Application[]
+  applications   Application[]
+  placedStudents Student[]
 
   @@index([createdAt])
   @@map("jobs")
@@ -132,8 +133,13 @@ model Student {
   password                 String   @map("password")
   isVerified               Boolean  @default(false) @map("is_verified")
   cgpa                     Float    @default(-1) @map("cgpa")
+  isPlaced                 Boolean  @default(false)
+  isDreamPlaced            Boolean  @default(false)
+  placedJobId              String?  @map("job_id")
   createdAt                DateTime @default(now()) @map("created_at")
   updatedAt                DateTime @updatedAt @map("updated_at")
+
+  placedJob Job? @relation(fields: [placedJobId], references: [id], onDelete: SetNull)
 
   tokens       StudentToken[]
   applications Application[]
@@ -157,11 +163,13 @@ model StudentToken {
 }
 
 model Application {
-  id        String   @id @default(cuid())
-  studentId String   @map("student_id")
-  jobId     String   @map("job_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id            String   @id @default(cuid())
+  studentId     String   @map("student_id")
+  jobId         String   @map("job_id")
+  isShortlisted Boolean  @default(false) @map("is_shortlisted")
+  isPlaced      Boolean  @default(false) @map("is_placed")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
   job     Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
