@@ -14,8 +14,14 @@ const {
   applyToJob,
   appliedStudents,
   downloadAppliedStudentsCSV,
+  markShortlisted,
+  unmarkShortlisted,
   shortlistedStudents,
+  markPlaced,
+  unmarkPlaced,
   placedStudents,
+  shortlistedResults,
+  placedResults,
 } = require("../docs/job.doc");
 const {
   registerStudent,
@@ -118,11 +124,29 @@ const documentation = {
     "/jobs/{id}/applied-students/csv": {
       get: downloadAppliedStudentsCSV,
     },
+    "/jobs/{id}/mark-shortlisted": {
+      post: markShortlisted,
+    },
+    "/jobs/{id}/unmark-shortlisted": {
+      post: unmarkShortlisted,
+    },
     "/jobs/{id}/shortlisted-students": {
       get: shortlistedStudents,
     },
+    "/jobs/{id}/mark-placed": {
+      post: markPlaced,
+    },
+    "/jobs/{id}/unmark-placed": {
+      post: unmarkPlaced,
+    },
     "/jobs/{id}/placed-students": {
       get: placedStudents,
+    },
+    "/jobs/{id}/shortlisted-results": {
+      get: shortlistedResults,
+    },
+    "/jobs/{id}/placed-results": {
+      get: placedResults,
     },
     "/students": {
       post: registerStudent,
