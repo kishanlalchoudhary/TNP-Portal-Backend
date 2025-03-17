@@ -62,7 +62,7 @@ const getSummaryOfQueries = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Summary of Queries fetched successfully",
+      message: "Summary of queries fetched successfully",
       summary: response.summary,
     });
   } catch (error) {

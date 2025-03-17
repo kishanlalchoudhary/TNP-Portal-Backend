@@ -430,7 +430,7 @@ const getAppliedJobs = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Applied Jobs fetched successfully",
+      message: "Applied jobs fetched successfully",
       jobs: formattedJobs,
     });
   } catch (error) {

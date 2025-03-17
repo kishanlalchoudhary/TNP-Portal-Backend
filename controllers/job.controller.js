@@ -88,7 +88,7 @@ const getActiveJobs = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Active Jobs fetched successfully",
+      message: "Active jobs fetched successfully",
       jobs,
     });
   } catch (error) {
@@ -120,7 +120,7 @@ const getInactiveJobs = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Inactive Jobs fetched successfully",
+      message: "Inactive jobs fetched successfully",
       jobs,
     });
   } catch (error) {
@@ -281,7 +281,7 @@ const getAppliedStudents = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Applied Students fetched successfully",
+      message: "Applied students fetched successfully",
       students: formattedStudents,
     });
   } catch (error) {
@@ -346,6 +346,80 @@ const downloadAppliedStudentsCSV = async (req, res) => {
   }
 };
 
+const markShortlisted = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { studentIds } = req.body;
+
+    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid studentIds. Must be a non-empty array.",
+      });
+    }
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    await prisma.application.updateMany({
+      where: {
+        jobId: id,
+        studentId: { in: studentIds },
+      },
+      data: {
+        isShortlisted: true,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Students have been successfully marked as shortlisted",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const unmarkShortlisted = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { studentIds } = req.body;
+
+    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid studentIds. Must be a non-empty array.",
+      });
+    }
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    await prisma.application.updateMany({
+      where: {
+        jobId: id,
+        studentId: { in: studentIds },
+      },
+      data: {
+        isShortlisted: false,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Students have been successfully unmarked as shortlisted",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
 const getShortlistedStudents = async (req, res) => {
   try {
     const { id } = req.params;
@@ -397,8 +471,82 @@ const getShortlistedStudents = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Shortlisted Students fetched successfully",
+      message: "Shortlisted students fetched successfully",
       students: formattedStudents,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const markPlaced = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { studentIds } = req.body;
+
+    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid studentIds. Must be a non-empty array.",
+      });
+    }
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    await prisma.application.updateMany({
+      where: {
+        jobId: id,
+        studentId: { in: studentIds },
+      },
+      data: {
+        isPlaced: true,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Students have been successfully marked as placed",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const unmarkPlaced = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { studentIds } = req.body;
+
+    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid studentIds. Must be a non-empty array.",
+      });
+    }
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    await prisma.application.updateMany({
+      where: {
+        jobId: id,
+        studentId: { in: studentIds },
+      },
+      data: {
+        isPlaced: false,
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Students have been successfully unmarked as placed",
     });
   } catch (error) {
     console.error(error);
@@ -420,7 +568,6 @@ const getPlacedStudents = async (req, res) => {
         applications: {
           some: {
             jobId: id,
-            isShortlisted: true,
             isPlaced: true,
           },
         },
@@ -458,8 +605,90 @@ const getPlacedStudents = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Placed Students fetched successfully",
+      message: "Placed students fetched successfully",
       students: formattedStudents,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const getShortlistedResults = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const students = await prisma.student.findMany({
+      where: {
+        applications: {
+          some: {
+            jobId: id,
+            isShortlisted: true,
+          },
+        },
+      },
+      select: {
+        id: true,
+        fullName: true,
+        pictRegistrationId: true,
+        universityPRN: true,
+        cgpa: true,
+      },
+      orderBy: {
+        cgpa: "desc",
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Shortlisted results fetched successfully",
+      students,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const getPlacedResults = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const students = await prisma.student.findMany({
+      where: {
+        applications: {
+          some: {
+            jobId: id,
+            isPlaced: true,
+          },
+        },
+      },
+      select: {
+        id: true,
+        fullName: true,
+        pictRegistrationId: true,
+        universityPRN: true,
+        cgpa: true,
+      },
+      orderBy: {
+        cgpa: "desc",
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Placed results fetched successfully",
+      students,
     });
   } catch (error) {
     console.error(error);
@@ -477,6 +706,12 @@ module.exports = {
   applyToJob,
   getAppliedStudents,
   downloadAppliedStudentsCSV,
+  markShortlisted,
+  unmarkShortlisted,
   getShortlistedStudents,
+  markPlaced,
+  unmarkPlaced,
   getPlacedStudents,
+  getShortlistedResults,
+  getPlacedResults,
 };

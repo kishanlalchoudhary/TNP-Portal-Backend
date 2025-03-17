@@ -10,8 +10,14 @@ const {
   applyToJob,
   getAppliedStudents,
   downloadAppliedStudentsCSV,
+  markShortlisted,
+  unmarkShortlisted,
   getShortlistedStudents,
+  markPlaced,
+  unmarkPlaced,
   getPlacedStudents,
+  getShortlistedResults,
+  getPlacedResults,
 } = require("../controllers/job.controller");
 const { adminAuthMiddleware } = require("../middlewares/admin_auth.middleware");
 const { uploadMiddleware } = require("../middlewares/upload.middleware");
@@ -44,11 +50,21 @@ router.get(
   adminAuthMiddleware,
   downloadAppliedStudentsCSV
 );
+router.post("/:id/mark-shortlisted", adminAuthMiddleware, markShortlisted);
+router.post("/:id/unmark-shortlisted", adminAuthMiddleware, unmarkShortlisted);
 router.get(
   "/:id/shortlisted-students",
   adminAuthMiddleware,
   getShortlistedStudents
 );
+router.post("/:id/mark-placed", adminAuthMiddleware, markPlaced);
+router.post("/:id/unmark-placed", adminAuthMiddleware, unmarkPlaced);
 router.get("/:id/placed-students", adminAuthMiddleware, getPlacedStudents);
+router.get(
+  "/:id/shortlisted-results",
+  studentAuthMiddleware,
+  getShortlistedResults
+);
+router.get("/:id/placed-results", studentAuthMiddleware, getPlacedResults);
 
 module.exports = router;

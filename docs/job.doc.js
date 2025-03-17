@@ -267,6 +267,98 @@ const downloadAppliedStudentsCSV = {
   responses: {},
 };
 
+const markShortlisted = {
+  tags: ["Jobs"],
+  description: "Mark Shortlisted",
+  operationId: "MarkShortlisted",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            studentIds: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "cm7kotjvp0003xe0whhmtd7nl",
+                "cm84ofmj60002yl0vklrq9cra",
+              ],
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
+const unmarkShortlisted = {
+  tags: ["Jobs"],
+  description: "unmark Shortlisted",
+  operationId: "UnmarkShortlisted",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            studentIds: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "cm7kotjvp0003xe0whhmtd7nl",
+                "cm84ofmj60002yl0vklrq9cra",
+              ],
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
 const shortlistedStudents = {
   tags: ["Jobs"],
   description: "Shortlisted Students",
@@ -291,10 +383,150 @@ const shortlistedStudents = {
   responses: {},
 };
 
+const markPlaced = {
+  tags: ["Jobs"],
+  description: "Mark Placed",
+  operationId: "MarkPlaced",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            studentIds: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "cm7kotjvp0003xe0whhmtd7nl",
+                "cm84ofmj60002yl0vklrq9cra",
+              ],
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
+const unmarkPlaced = {
+  tags: ["Jobs"],
+  description: "Unmark Placed",
+  operationId: "UnmarkPlaced",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  requestBody: {
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            studentIds: {
+              type: "array",
+              items: {
+                type: "string",
+              },
+              example: [
+                "cm7kotjvp0003xe0whhmtd7nl",
+                "cm84ofmj60002yl0vklrq9cra",
+              ],
+            },
+          },
+        },
+      },
+    },
+    required: true,
+  },
+  responses: {},
+};
+
 const placedStudents = {
   tags: ["Jobs"],
   description: "Placed Students",
   operationId: "PlacedStudents",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const shortlistedResults = {
+  tags: ["Jobs"],
+  description: "Shortlisted Results",
+  operationId: "ShortlistedResults",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const placedResults = {
+  tags: ["Jobs"],
+  description: "Placed Results",
+  operationId: "PlacedResults",
   security: [
     {
       bearerAuth: [],
@@ -325,6 +557,12 @@ module.exports = {
   applyToJob,
   appliedStudents,
   downloadAppliedStudentsCSV,
+  markShortlisted,
+  unmarkShortlisted,
   shortlistedStudents,
+  markPlaced,
+  unmarkPlaced,
   placedStudents,
+  shortlistedResults,
+  placedResults,
 };
