@@ -254,16 +254,35 @@ const getAppliedStudents = async (req, res) => {
         pictRegistrationId: true,
         universityPRN: true,
         cgpa: true,
+        applications: {
+          where: {
+            jobId: id,
+          },
+          select: {
+            isShortlisted: true,
+            isPlaced: true,
+          },
+        },
       },
       orderBy: {
         cgpa: "desc",
       },
     });
 
+    const formattedStudents = students.map((student) => ({
+      id: student.id,
+      fullName: student.fullName,
+      pictRegistrationId: student.pictRegistrationId,
+      universityPRN: student.universityPRN,
+      cgpa: student.cgpa,
+      isShortlisted: student.applications[0]?.isShortlisted ?? false,
+      isPlaced: student.applications[0]?.isPlaced ?? false,
+    }));
+
     res.status(200).json({
       success: true,
       message: "Applied Students fetched successfully",
-      students,
+      students: formattedStudents,
     });
   } catch (error) {
     console.error(error);
@@ -327,6 +346,127 @@ const downloadAppliedStudentsCSV = async (req, res) => {
   }
 };
 
+const getShortlistedStudents = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const students = await prisma.student.findMany({
+      where: {
+        applications: {
+          some: {
+            jobId: id,
+            isShortlisted: true,
+          },
+        },
+      },
+      select: {
+        id: true,
+        fullName: true,
+        pictRegistrationId: true,
+        universityPRN: true,
+        cgpa: true,
+        applications: {
+          where: {
+            jobId: id,
+          },
+          select: {
+            isShortlisted: true,
+            isPlaced: true,
+          },
+        },
+      },
+      orderBy: {
+        cgpa: "desc",
+      },
+    });
+
+    const formattedStudents = students.map((student) => ({
+      id: student.id,
+      fullName: student.fullName,
+      pictRegistrationId: student.pictRegistrationId,
+      universityPRN: student.universityPRN,
+      cgpa: student.cgpa,
+      isShortlisted: student.applications[0]?.isShortlisted ?? false,
+      isPlaced: student.applications[0]?.isPlaced ?? false,
+    }));
+
+    res.status(200).json({
+      success: true,
+      message: "Shortlisted Students fetched successfully",
+      students: formattedStudents,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
+const getPlacedStudents = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const job = await prisma.job.findUnique({ where: { id } });
+    if (!job) {
+      return res.status(404).json({ success: false, message: "Job not found" });
+    }
+
+    const students = await prisma.student.findMany({
+      where: {
+        applications: {
+          some: {
+            jobId: id,
+            isShortlisted: true,
+            isPlaced: true,
+          },
+        },
+      },
+      select: {
+        id: true,
+        fullName: true,
+        pictRegistrationId: true,
+        universityPRN: true,
+        cgpa: true,
+        applications: {
+          where: {
+            jobId: id,
+          },
+          select: {
+            isShortlisted: true,
+            isPlaced: true,
+          },
+        },
+      },
+      orderBy: {
+        cgpa: "desc",
+      },
+    });
+
+    const formattedStudents = students.map((student) => ({
+      id: student.id,
+      fullName: student.fullName,
+      pictRegistrationId: student.pictRegistrationId,
+      universityPRN: student.universityPRN,
+      cgpa: student.cgpa,
+      isShortlisted: student.applications[0]?.isShortlisted ?? false,
+      isPlaced: student.applications[0]?.isPlaced ?? false,
+    }));
+
+    res.status(200).json({
+      success: true,
+      message: "Placed Students fetched successfully",
+      students: formattedStudents,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
+};
+
 module.exports = {
   createJob,
   getJobs,
@@ -337,4 +477,6 @@ module.exports = {
   applyToJob,
   getAppliedStudents,
   downloadAppliedStudentsCSV,
+  getShortlistedStudents,
+  getPlacedStudents,
 };
