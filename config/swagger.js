@@ -14,6 +14,8 @@ const {
   applyToJob,
   appliedStudents,
   downloadAppliedStudentsCSV,
+  shortlistedStudents,
+  placedStudents,
 } = require("../docs/job.doc");
 const {
   registerStudent,
@@ -115,6 +117,12 @@ const documentation = {
     },
     "/jobs/{id}/applied-students/csv": {
       get: downloadAppliedStudentsCSV,
+    },
+    "/jobs/{id}/shortlisted-students": {
+      get: shortlistedStudents,
+    },
+    "/jobs/{id}/placed-students": {
+      get: placedStudents,
     },
     "/students": {
       post: registerStudent,

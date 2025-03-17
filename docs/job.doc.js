@@ -267,6 +267,54 @@ const downloadAppliedStudentsCSV = {
   responses: {},
 };
 
+const shortlistedStudents = {
+  tags: ["Jobs"],
+  description: "Shortlisted Students",
+  operationId: "ShortlistedStudents",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
+const placedStudents = {
+  tags: ["Jobs"],
+  description: "Placed Students",
+  operationId: "PlacedStudents",
+  security: [
+    {
+      bearerAuth: [],
+    },
+  ],
+  parameters: [
+    {
+      name: "id",
+      in: "path",
+      required: true,
+      description: "Job Id",
+      schema: {
+        type: "string",
+        example: "cm6lqlr0k0000vp0vzd0t3nzh",
+      },
+    },
+  ],
+  responses: {},
+};
+
 module.exports = {
   createJob,
   getJobs,
@@ -277,4 +325,6 @@ module.exports = {
   applyToJob,
   appliedStudents,
   downloadAppliedStudentsCSV,
+  shortlistedStudents,
+  placedStudents,
 };

@@ -215,6 +215,19 @@ const getVerifiedStudents = async (req, res) => {
         fullName: true,
         pictRegistrationId: true,
         universityPRN: true,
+        isPlaced: true,
+        isDreamPlaced: true,
+        placedJob: {
+          select: {
+            id: true,
+            companyLogoURL: true,
+            companyName: true,
+            jobRole: true,
+            jobLocation: true,
+            companyPackage: true,
+            dreamCompany: true,
+          },
+        },
       },
       orderBy: { createdAt: "asc" },
     });
@@ -390,16 +403,35 @@ const getAppliedJobs = async (req, res) => {
         companyName: true,
         companyPackage: true,
         dreamCompany: true,
+        applications: {
+          where: {
+            studentId: id,
+          },
+          select: {
+            isShortlisted: true,
+            isPlaced: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
       },
     });
 
+    const formattedJobs = jobs.map((job) => ({
+      id: job.id,
+      companyLogoURL: job.companyLogoURL,
+      companyName: job.companyName,
+      companyPackage: job.companyPackage,
+      dreamCompany: job.dreamCompany,
+      isShortlisted: job.applications[0]?.isShortlisted ?? false,
+      isPlaced: job.applications[0]?.isPlaced ?? false,
+    }));
+
     res.status(200).json({
       success: true,
       message: "Applied Jobs fetched successfully",
-      jobs,
+      jobs: formattedJobs,
     });
   } catch (error) {
     console.error(error);
