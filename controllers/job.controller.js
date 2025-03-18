@@ -2,6 +2,7 @@ const prisma = require("../config/prisma");
 const parser = require("json-2-csv");
 const { deleteFileFromCloudinary } = require("../utils/cloudinary.utility");
 const { isEligibleForJob } = require("../utils/student.utility");
+const { convertFromIstToUtc } = require("../utils/moment.utility");
 
 const createJob = async (req, res) => {
   try {
@@ -28,7 +29,7 @@ const createJob = async (req, res) => {
         percentageDiploma: parseFloat(req.body.percentage_diploma),
         activeBacklogs: parseInt(req.body.active_backlogs),
         passiveBacklogs: parseInt(req.body.passive_backlogs),
-        applicationDeadline: new Date(req.body.application_deadline),
+        applicationDeadline: convertFromIstToUtc(req.body.application_deadline),
       },
     });
 
@@ -70,7 +71,7 @@ const getActiveJobs = async (req, res) => {
     const jobs = await prisma.job.findMany({
       where: {
         applicationDeadline: {
-          gt: new Date(),
+          gt: new Date().toISOString(),
         },
       },
       select: {
@@ -102,7 +103,7 @@ const getInactiveJobs = async (req, res) => {
     const jobs = await prisma.job.findMany({
       where: {
         applicationDeadline: {
-          lt: new Date(),
+          lt: new Date().toISOString(),
         },
       },
       select: {
