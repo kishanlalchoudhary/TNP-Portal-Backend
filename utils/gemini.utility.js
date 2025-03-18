@@ -23,6 +23,8 @@ const getQuestionsFromGemini = async (skill) => {
     - Commonly asked in technical interviews.
     - Concise, clear, and unambiguous.
     - Answerable within a maximum of 250 words.
+    - Ensure questions are **randomized** and **unique** on every execution.
+    - Vary the phrasing and structure each time the prompt is used.
 
     ### Output Format Requirement:
     Strictly return a valid JSON object with a key "questions", containing an array of objects having keys question and difficulty.
@@ -42,7 +44,8 @@ const getQuestionsFromGemini = async (skill) => {
     \`\`\`
 
     Important: 
-    - Do not include any additional text, explanations, or formatting outside the JSON object.  
+    - Do not include any additional text, explanations, or formatting outside the JSON object.
+    - Ensure that the generated questions are different every time by using varied scenarios and random selection.  
     - Ensure that the JSON output is correctly formatted and parseable.  
     `;
 
