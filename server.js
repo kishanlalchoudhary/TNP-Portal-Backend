@@ -5,6 +5,8 @@ const hpp = require("hpp");
 const helmet = require("helmet");
 const compression = require("compression");
 const swaggerUI = require("swagger-ui-express");
+const axios = require("axios");
+const cron = require("node-cron");
 
 const config = require("./config/env");
 const documentation = require("./config/swagger");
@@ -46,6 +48,25 @@ app.use("/api/v1/students", require("./routes/student.route"));
 app.use("/api/v1/skills", require("./routes/skill.route"));
 app.use("/api/v1/queries", require("./routes/query.route"));
 app.use("/api/v1/notices", require("./routes/notice.route"));
+
+app.get("/ping", (req, res) => {
+  res.status(200).json("Pong!");
+});
+
+app.get("/", (req, res) => {
+  res.status(200).json("Server is running...");
+});
+
+// Keep server active by pinging itself every 10 minutes
+cron.schedule("*/10 * * * *", async () => {
+  try {
+    const url = `${config.backendURL}/ping`;
+    await axios.get(url);
+    console.log("Pinged server to keep it active.");
+  } catch (error) {
+    console.error("Failed to ping server:", error.message);
+  }
+});
 
 process.on("SIGINT", async () => {
   await prisma.$disconnect();

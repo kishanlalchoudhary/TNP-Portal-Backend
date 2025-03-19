@@ -5,6 +5,7 @@ const config = {
   port: Number(process.env.PORT) || 8000,
   databaseURL: process.env.DATABASE_URL,
   frontendURL: process.env.FRONTENT_URL,
+  backendURL: process.env.BACKEND_URL,
   pictLogoURL: process.env.PICT_LOGO_URL,
   jwtSecretKey: process.env.JWT_SECRET_KEY,
   salt: Number(process.env.SALT) || 10,
