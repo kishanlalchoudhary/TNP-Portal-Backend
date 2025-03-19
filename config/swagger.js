@@ -49,6 +49,11 @@ const {
   deleteQuery,
   replyQuery,
 } = require("../docs/query.doc");
+const {
+  createNotice,
+  getNotices,
+  deleteNotice,
+} = require("../docs/notice.doc");
 
 const documentation = {
   openapi: "3.1.0",
@@ -86,6 +91,10 @@ const documentation = {
     {
       name: "Queries",
       description: "APIs related to help and support query management",
+    },
+    {
+      name: "Notices",
+      description: "APIs related to notice management",
     },
   ],
   paths: {
@@ -201,6 +210,13 @@ const documentation = {
     },
     "/queries/{id}/reply": {
       post: replyQuery,
+    },
+    "/notices": {
+      post: createNotice,
+      get: getNotices,
+    },
+    "/notices/{id}": {
+      delete: deleteNotice,
     },
   },
   components: {
