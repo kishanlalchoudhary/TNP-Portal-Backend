@@ -196,30 +196,3 @@ module.exports = {
   createNotification,
   deleteNotification
 };
-
-const createNotification = async (req, res) => {
-  try {
-    const { title, description, studentIds } = req.body;
-
-    // Create the notification
-    const notification = await prisma.notification.create({
-      data: {
-        title,
-        description,
-        students: {
-          connect: studentIds.map(id => ({ id }))
-        }
-      }
-    });
-
-    res.status(201).json({
-      success: true,
-      message: "Notification created successfully",
-      notification
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Something went wrong" });
-  }
-};
-
