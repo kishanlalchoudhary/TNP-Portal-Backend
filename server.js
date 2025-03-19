@@ -6,6 +6,7 @@ const helmet = require("helmet");
 const compression = require("compression");
 const swaggerUI = require("swagger-ui-express");
 
+const { scheduleNotifications } = require('./notification.scheduler');
 const config = require("./config/env");
 const documentation = require("./config/swagger");
 const prisma = require("./config/prisma");
@@ -46,6 +47,10 @@ app.use("/api/v1/students", require("./routes/student.route"));
 app.use("/api/v1/skills", require("./routes/skill.route"));
 app.use("/api/v1/queries", require("./routes/query.route"));
 app.use("/api/v1/notices", require("./routes/notice.route"));
+app.use('/api/v1/health', require('./routes/health.route'));
+
+// Initialize the notification scheduler
+scheduleNotifications();
 
 process.on("SIGINT", async () => {
   await prisma.$disconnect();

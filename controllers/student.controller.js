@@ -439,7 +439,6 @@ const getAppliedJobs = async (req, res) => {
   }
 };
 
-
 const getStudentNotifications = async (req, res) => {
   try {
     const { id } = req.student; 
