@@ -90,7 +90,7 @@ const sendStudentVerifiedEmail = async ({ email }) => {
         </head>
         <body>
           <div class="email-container">
-            <img src="${config.pictLogoURL}" alt="Company Logo" class="logo" />
+            <img src="${config.logoURL}" alt="Company Logo" class="logo" />
             <h2>Pune Institute of Computer Technology</h2>
             <h3>Student Verification Successful</h3>
             <p class="content">
@@ -188,7 +188,7 @@ const sendQueryReplyEmail = async ({ email, query, reply }) => {
         </head>
         <body>
           <div class="email-container">
-            <img src="${config.pictLogoURL}" alt="Company Logo" class="logo" />
+            <img src="${config.logoURL}" alt="Company Logo" class="logo" />
             <h2>Pune Institute of Computer Technology</h2>
             <h3>Reply to Your Query</h3>
             <p class="content">

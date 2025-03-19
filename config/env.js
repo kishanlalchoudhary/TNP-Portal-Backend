@@ -6,7 +6,7 @@ const config = {
   databaseURL: process.env.DATABASE_URL,
   frontendURL: process.env.FRONTENT_URL,
   backendURL: process.env.BACKEND_URL,
-  pictLogoURL: process.env.PICT_LOGO_URL,
+  logoURL: process.env.LOGO_URL,
   jwtSecretKey: process.env.JWT_SECRET_KEY,
   salt: Number(process.env.SALT) || 10,
   cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
