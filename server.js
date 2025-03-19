@@ -50,7 +50,7 @@ app.use("/api/v1/queries", require("./routes/query.route"));
 app.use("/api/v1/notices", require("./routes/notice.route"));
 
 app.get("/ping", (req, res) => {
-  res.status(200).json("Pong!");
+  res.status(200).json({ success: true, message: "Pong!" });
 });
 
 app.get("/", (req, res) => {
