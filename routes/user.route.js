@@ -7,8 +7,11 @@ const {
   loginAndGetUser,
   deleteUser,
 } = require("../controllers/user.controller");
+const {
+  validateUserMiddleware,
+} = require("../middlewares/validate_user.middleware");
 
-router.post("/", createUser);
+router.post("/", validateUserMiddleware, createUser);
 router.get("/", getUsers);
 router.post("/login-and-get-user", loginAndGetUser);
 router.delete("/:id", deleteUser);

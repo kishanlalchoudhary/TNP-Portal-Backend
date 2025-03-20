@@ -40,46 +40,6 @@ const createUser = async (req, res) => {
       password,
     } = req.body;
 
-    // if (
-    //   !fullName ||
-    //   !dateOfBirth ||
-    //   !gender ||
-    //   !permanentAddress ||
-    //   !city ||
-    //   !state ||
-    //   !branch ||
-    //   !universityPRN ||
-    //   !pictRegistrationId ||
-    //   !percentage10th ||
-    //   !board10th ||
-    //   !passingYear10th ||
-    //   !noOfGapYearsAfter10th ||
-    //   !reasonOfGapAfter10th ||
-    //   !after10thAppearedFor ||
-    //   !percentage12th ||
-    //   !board12th ||
-    //   !passingYear12th ||
-    //   !noOfGapYearsAfter12th ||
-    //   !reasonOfGapAfter12th ||
-    //   !percentageDiploma ||
-    //   !universityOfDiploma ||
-    //   !passingYearDiploma ||
-    //   !noOfGapYearsAfterDiploma ||
-    //   !reasonOfGapAfterDiploma ||
-    //   !percentileCet ||
-    //   !percentileJee ||
-    //   !collegeStartedYear ||
-    //   !aadharNumber ||
-    //   !panNumber ||
-    //   !passportNumber ||
-    //   !citizenship ||
-    //   !password
-    // ) {
-    //   return res
-    //     .status(400)
-    //     .json({ success: false, message: "All fields are required" });
-    // }
-
     const existingUser = await prisma.user.findUnique({
       where: { pictRegistrationId },
     });
