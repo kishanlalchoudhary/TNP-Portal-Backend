@@ -15,7 +15,6 @@ const {
   appliedStudents,
   downloadAppliedStudentsCSV,
   markShortlisted,
-  unmarkShortlisted,
   shortlistedStudents,
   markPlaced,
   placedStudents,
@@ -147,9 +146,6 @@ const documentation = {
     },
     "/jobs/{id}/mark-shortlisted": {
       post: markShortlisted,
-    },
-    "/jobs/{id}/unmark-shortlisted": {
-      post: unmarkShortlisted,
     },
     "/jobs/{id}/shortlisted-students": {
       get: shortlistedStudents,

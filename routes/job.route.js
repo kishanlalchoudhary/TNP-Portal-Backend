@@ -11,7 +11,6 @@ const {
   getAppliedStudents,
   downloadAppliedStudentsCSV,
   markShortlisted,
-  unmarkShortlisted,
   getShortlistedStudents,
   markPlaced,
   getPlacedStudents,
@@ -51,7 +50,6 @@ router.get(
   downloadAppliedStudentsCSV
 );
 router.post("/:id/mark-shortlisted", adminAuthMiddleware, markShortlisted);
-router.post("/:id/unmark-shortlisted", adminAuthMiddleware, unmarkShortlisted);
 router.get(
   "/:id/shortlisted-students",
   adminAuthMiddleware,

@@ -392,43 +392,6 @@ const markShortlisted = async (req, res) => {
   }
 };
 
-const unmarkShortlisted = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { studentIds } = req.body;
-
-    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid studentIds. Must be a non-empty array.",
-      });
-    }
-
-    const job = await prisma.job.findUnique({ where: { id } });
-    if (!job) {
-      return res.status(404).json({ success: false, message: "Job not found" });
-    }
-
-    await prisma.application.updateMany({
-      where: {
-        jobId: id,
-        studentId: { in: studentIds },
-      },
-      data: {
-        isShortlisted: false,
-      },
-    });
-
-    res.status(200).json({
-      success: true,
-      message: "Students have been successfully unmarked as shortlisted",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Something went wrong" });
-  }
-};
-
 const getShortlistedStudents = async (req, res) => {
   try {
     const { id } = req.params;
@@ -696,7 +659,6 @@ module.exports = {
   getAppliedStudents,
   downloadAppliedStudentsCSV,
   markShortlisted,
-  unmarkShortlisted,
   getShortlistedStudents,
   markPlaced,
   getPlacedStudents,
