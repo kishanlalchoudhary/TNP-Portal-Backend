@@ -366,10 +366,16 @@ const markShortlisted = async (req, res) => {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
+    const filter = { isDreamPlaced: false };
+    if (job.dreamCompany === "No") {
+      filter.isPlaced = false;
+    }
+
     await prisma.application.updateMany({
       where: {
         jobId: id,
         studentId: { in: studentIds },
+        student: filter,
       },
       data: {
         isShortlisted: true,
@@ -500,56 +506,36 @@ const markPlaced = async (req, res) => {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
 
+    const filter = { isDreamPlaced: false };
+    if (job.dreamCompany === "No") {
+      filter.isPlaced = false;
+    }
+
     await prisma.application.updateMany({
       where: {
         jobId: id,
         studentId: { in: studentIds },
+        student: filter,
       },
       data: {
         isPlaced: true,
       },
     });
 
+    await prisma.student.updateMany({
+      where: {
+        id: { in: studentIds },
+      },
+      data: {
+        isPlaced: true,
+        isDreamPlaced: job.dreamCompany === "Yes",
+        placedJobId: id,
+      },
+    });
+
     res.status(200).json({
       success: true,
       message: "Students have been successfully marked as placed",
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Something went wrong" });
-  }
-};
-
-const unmarkPlaced = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { studentIds } = req.body;
-
-    if (!studentIds || !Array.isArray(studentIds) || studentIds.length === 0) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid studentIds. Must be a non-empty array.",
-      });
-    }
-
-    const job = await prisma.job.findUnique({ where: { id } });
-    if (!job) {
-      return res.status(404).json({ success: false, message: "Job not found" });
-    }
-
-    await prisma.application.updateMany({
-      where: {
-        jobId: id,
-        studentId: { in: studentIds },
-      },
-      data: {
-        isPlaced: false,
-      },
-    });
-
-    res.status(200).json({
-      success: true,
-      message: "Students have been successfully unmarked as placed",
     });
   } catch (error) {
     console.error(error);
@@ -713,7 +699,6 @@ module.exports = {
   unmarkShortlisted,
   getShortlistedStudents,
   markPlaced,
-  unmarkPlaced,
   getPlacedStudents,
   getShortlistedResults,
   getPlacedResults,

@@ -18,7 +18,6 @@ const {
   unmarkShortlisted,
   shortlistedStudents,
   markPlaced,
-  unmarkPlaced,
   placedStudents,
   shortlistedResults,
   placedResults,
@@ -157,9 +156,6 @@ const documentation = {
     },
     "/jobs/{id}/mark-placed": {
       post: markPlaced,
-    },
-    "/jobs/{id}/unmark-placed": {
-      post: unmarkPlaced,
     },
     "/jobs/{id}/placed-students": {
       get: placedStudents,

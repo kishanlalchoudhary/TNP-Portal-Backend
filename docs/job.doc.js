@@ -429,52 +429,6 @@ const markPlaced = {
   responses: {},
 };
 
-const unmarkPlaced = {
-  tags: ["Jobs"],
-  description: "Unmark Placed",
-  operationId: "UnmarkPlaced",
-  security: [
-    {
-      bearerAuth: [],
-    },
-  ],
-  parameters: [
-    {
-      name: "id",
-      in: "path",
-      required: true,
-      description: "Job Id",
-      schema: {
-        type: "string",
-        example: "cm6lqlr0k0000vp0vzd0t3nzh",
-      },
-    },
-  ],
-  requestBody: {
-    content: {
-      "application/json": {
-        schema: {
-          type: "object",
-          properties: {
-            studentIds: {
-              type: "array",
-              items: {
-                type: "string",
-              },
-              example: [
-                "cm7kotjvp0003xe0whhmtd7nl",
-                "cm84ofmj60002yl0vklrq9cra",
-              ],
-            },
-          },
-        },
-      },
-    },
-    required: true,
-  },
-  responses: {},
-};
-
 const placedStudents = {
   tags: ["Jobs"],
   description: "Placed Students",
@@ -561,7 +515,6 @@ module.exports = {
   unmarkShortlisted,
   shortlistedStudents,
   markPlaced,
-  unmarkPlaced,
   placedStudents,
   shortlistedResults,
   placedResults,

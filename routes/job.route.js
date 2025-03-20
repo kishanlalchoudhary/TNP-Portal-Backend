@@ -14,7 +14,6 @@ const {
   unmarkShortlisted,
   getShortlistedStudents,
   markPlaced,
-  unmarkPlaced,
   getPlacedStudents,
   getShortlistedResults,
   getPlacedResults,
@@ -59,7 +58,6 @@ router.get(
   getShortlistedStudents
 );
 router.post("/:id/mark-placed", adminAuthMiddleware, markPlaced);
-router.post("/:id/unmark-placed", adminAuthMiddleware, unmarkPlaced);
 router.get("/:id/placed-students", adminAuthMiddleware, getPlacedStudents);
 router.get(
   "/:id/shortlisted-results",
