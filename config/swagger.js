@@ -54,6 +54,12 @@ const {
   getNotices,
   deleteNotice,
 } = require("../docs/notice.doc");
+const {
+  createUser,
+  getUsers,
+  loginAndGetUser,
+  deleteUser,
+} = require("../docs/user.doc");
 
 const documentation = {
   openapi: "3.1.0",
@@ -95,6 +101,10 @@ const documentation = {
     {
       name: "Notices",
       description: "APIs related to notice management",
+    },
+    {
+      name: "Users",
+      description: "APIs related to user management",
     },
   ],
   paths: {
@@ -217,6 +227,16 @@ const documentation = {
     },
     "/notices/{id}": {
       delete: deleteNotice,
+    },
+    "/users": {
+      post: createUser,
+      get: getUsers,
+    },
+    "/users/login-and-get-user": {
+      post: loginAndGetUser,
+    },
+    "/users/{id}": {
+      delete: deleteUser,
     },
   },
   components: {

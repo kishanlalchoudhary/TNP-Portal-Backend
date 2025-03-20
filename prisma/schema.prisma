@@ -252,5 +252,7 @@ model User {
   password                 String   @map("password")
   createdAt                DateTime @default(now()) @map("created_at")
 
+  @@index([pictRegistrationId])
+  @@index([createdAt])
   @@map("users")
 }

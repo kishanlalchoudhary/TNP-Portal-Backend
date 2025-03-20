@@ -40,49 +40,59 @@ const createUser = async (req, res) => {
       password,
     } = req.body;
 
-    if (
-      !fullName ||
-      !dateOfBirth ||
-      !gender ||
-      !permanentAddress ||
-      !city ||
-      !state ||
-      !branch ||
-      !universityPRN ||
-      !pictRegistrationId ||
-      !percentage10th ||
-      !board10th ||
-      !passingYear10th ||
-      !noOfGapYearsAfter10th ||
-      !reasonOfGapAfter10th ||
-      !after10thAppearedFor ||
-      !percentage12th ||
-      !board12th ||
-      !passingYear12th ||
-      !noOfGapYearsAfter12th ||
-      !reasonOfGapAfter12th ||
-      !percentageDiploma ||
-      !universityOfDiploma ||
-      !passingYearDiploma ||
-      !noOfGapYearsAfterDiploma ||
-      !reasonOfGapAfterDiploma ||
-      !percentileCet ||
-      !percentileJee ||
-      !collegeStartedYear ||
-      !aadharNumber ||
-      !panNumber ||
-      !passportNumber ||
-      !citizenship ||
-      !password
-    ) {
-      return res
-        .status(400)
-        .json({ success: false, message: "All fields are required" });
+    // if (
+    //   !fullName ||
+    //   !dateOfBirth ||
+    //   !gender ||
+    //   !permanentAddress ||
+    //   !city ||
+    //   !state ||
+    //   !branch ||
+    //   !universityPRN ||
+    //   !pictRegistrationId ||
+    //   !percentage10th ||
+    //   !board10th ||
+    //   !passingYear10th ||
+    //   !noOfGapYearsAfter10th ||
+    //   !reasonOfGapAfter10th ||
+    //   !after10thAppearedFor ||
+    //   !percentage12th ||
+    //   !board12th ||
+    //   !passingYear12th ||
+    //   !noOfGapYearsAfter12th ||
+    //   !reasonOfGapAfter12th ||
+    //   !percentageDiploma ||
+    //   !universityOfDiploma ||
+    //   !passingYearDiploma ||
+    //   !noOfGapYearsAfterDiploma ||
+    //   !reasonOfGapAfterDiploma ||
+    //   !percentileCet ||
+    //   !percentileJee ||
+    //   !collegeStartedYear ||
+    //   !aadharNumber ||
+    //   !panNumber ||
+    //   !passportNumber ||
+    //   !citizenship ||
+    //   !password
+    // ) {
+    //   return res
+    //     .status(400)
+    //     .json({ success: false, message: "All fields are required" });
+    // }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { pictRegistrationId },
+    });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User with this pict registration id already exists",
+      });
     }
 
     const hashed_password = await bcrypt.hash(password, config.salt);
 
-    const query = await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         fullName,
         dateOfBirth,
@@ -122,7 +132,7 @@ const createUser = async (req, res) => {
 
     res
       .status(201)
-      .json({ success: true, message: "User created successfully", query });
+      .json({ success: true, message: "User created successfully", user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Something went wrong" });
@@ -168,7 +178,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
+const loginAndGetUser = async (req, res) => {
   try {
     const { pictRegistrationId, password } = req.body;
 
@@ -190,7 +200,7 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "User details fetched successfully",
+      message: "User fetched successfully",
       user,
     });
   } catch (error) {
@@ -199,4 +209,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser, getUsers, deleteUser, loginUser };
+module.exports = { createUser, getUsers, loginAndGetUser, deleteUser };
