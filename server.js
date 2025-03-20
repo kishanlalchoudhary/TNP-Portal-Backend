@@ -49,6 +49,8 @@ app.use("/api/v1/skills", require("./routes/skill.route"));
 app.use("/api/v1/queries", require("./routes/query.route"));
 app.use("/api/v1/notices", require("./routes/notice.route"));
 
+app.use("/api/v1/users", require("./routes/user.route"));
+
 app.get("/ping", (req, res) => {
   res.status(200).json({ success: true, message: "Pong!" });
 });

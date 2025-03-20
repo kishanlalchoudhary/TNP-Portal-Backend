@@ -139,7 +139,7 @@ const loginStudent = async (req, res) => {
       },
       config.jwtSecretKey,
       {
-        expiresIn: "1d",
+        expiresIn: "15d",
       }
     );
 
@@ -147,7 +147,7 @@ const loginStudent = async (req, res) => {
       data: {
         token,
         studentId: student.id,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000 * 15),
       },
     });
 

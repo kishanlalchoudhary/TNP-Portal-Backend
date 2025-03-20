@@ -36,7 +36,7 @@ const adminLogin = async (req, res) => {
       },
       config.jwtSecretKey,
       {
-        expiresIn: "1d",
+        expiresIn: "15d",
       }
     );
 
@@ -44,7 +44,7 @@ const adminLogin = async (req, res) => {
       data: {
         token,
         adminId: admin.id,
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000 * 15),
       },
     });
 
