@@ -38,7 +38,7 @@ router.get("/verified", adminAuthMiddleware, getVerifiedStudents);
 router.get("/:id", adminAuthMiddleware, getStudent);
 router.delete("/:id", adminAuthMiddleware, deleteStudent);
 router.post("/:id/verify", adminAuthMiddleware, verifyStudent);
-router.get("/profile", studentAuthMiddleware, getProfile);
-router.get("/applied-jobs", studentAuthMiddleware, getAppliedJobs);
+router.get("/me/profile", studentAuthMiddleware, getProfile);
+router.get("/me/applied-jobs", studentAuthMiddleware, getAppliedJobs);
 
 module.exports = router;

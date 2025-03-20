@@ -192,10 +192,10 @@ const documentation = {
     "/students/{id}/verify": {
       post: verifyStudent,
     },
-    "/students/profile": {
+    "/students/me/profile": {
       get: getProfile,
     },
-    "/students/applied-jobs": {
+    "/students/me/applied-jobs": {
       get: appliedJobs,
     },
     "/skills": {
