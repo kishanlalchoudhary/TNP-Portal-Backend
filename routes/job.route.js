@@ -41,6 +41,7 @@ router.post(
 router.get("/", adminAuthMiddleware, getJobs);
 router.get("/active", studentAuthMiddleware, getActiveJobs);
 router.get("/inactive", studentAuthMiddleware, getInactiveJobs);
+router.get("/inactive/admin", adminAuthMiddleware, getInactiveJobs);
 router.get("/:id", studentAuthMiddleware, getJob);
 router.delete("/:id", adminAuthMiddleware, deleteJob);
 router.post("/:id/apply", studentAuthMiddleware, applyToJob);

@@ -15,6 +15,7 @@ const {
 
 router.post("/", adminAuthMiddleware, validateNoticeMiddleware, createNotice);
 router.get("/", studentAuthMiddleware, getNotices);
+router.get("/admin", adminAuthMiddleware, getNotices);
 router.delete("/:id", adminAuthMiddleware, deleteNotice);
 
 module.exports = router;

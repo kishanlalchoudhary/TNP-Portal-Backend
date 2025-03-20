@@ -130,6 +130,9 @@ const documentation = {
     "/jobs/inactive": {
       get: getInactiveJobs,
     },
+    "/jobs/inactive/admin": {
+      get: getInactiveJobs,
+    },
     "/jobs/{id}": {
       get: getJob,
       delete: deleteJob,
@@ -189,10 +192,10 @@ const documentation = {
     "/students/{id}/verify": {
       post: verifyStudent,
     },
-    "/students/me/profile": {
+    "/students/profile": {
       get: getProfile,
     },
-    "/students/me/applied-jobs": {
+    "/students/applied-jobs": {
       get: appliedJobs,
     },
     "/skills": {
@@ -223,6 +226,9 @@ const documentation = {
     },
     "/notices": {
       post: createNotice,
+      get: getNotices,
+    },
+    "/notices/admin": {
       get: getNotices,
     },
     "/notices/{id}": {

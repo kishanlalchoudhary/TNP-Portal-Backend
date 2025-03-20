@@ -71,7 +71,7 @@ const getActiveJobs = async (req, res) => {
     const jobs = await prisma.job.findMany({
       where: {
         applicationDeadline: {
-          gt: new Date().toISOString(),
+          gt: new Date(),
         },
       },
       select: {
@@ -103,7 +103,7 @@ const getInactiveJobs = async (req, res) => {
     const jobs = await prisma.job.findMany({
       where: {
         applicationDeadline: {
-          lt: new Date().toISOString(),
+          lt: new Date(),
         },
       },
       select: {
@@ -195,6 +195,9 @@ const applyToJob = async (req, res) => {
     const job = await prisma.job.findUnique({ where: { id: jobId } });
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
+    }
+    if (job.applicationDeadline < new Date()) {
+      return res.status(404).json({ success: false, message: "Job expired" });
     }
 
     const student = await prisma.student.findUnique({
@@ -309,7 +312,6 @@ const downloadAppliedStudentsCSV = async (req, res) => {
         },
       },
       select: {
-        id: true,
         fullName: true,
         primaryEmail: true,
         primaryMobileNumber: true,
