@@ -139,14 +139,14 @@ const sendQueryReplyEmail = async ({ email, query, reply }) => {
             .email-container {
               max-width: 600px;
               margin: 20px auto;
-              background: #ffffff;
+              background-color: #ffffff;
               padding: 20px;
               border-radius: 8px;
               box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
               text-align: center;
             }
             .logo {
-              width: 100px;
+              width: 210px;
             }
             .content {
               font-size: 16px;
@@ -189,7 +189,7 @@ const sendQueryReplyEmail = async ({ email, query, reply }) => {
         <body>
           <div class="email-container">
             <img src="${config.logoURL}" alt="Company Logo" class="logo" />
-            <h2>Pune Institute of Computer Technology</h2>
+            <h2>ElevateHire - Placement Made Easy</h2>
             <h3>Reply to Your Query</h3>
             <p class="content">
               Your query has been reviewed and replied by the Training & Placement
@@ -207,7 +207,7 @@ const sendQueryReplyEmail = async ({ email, query, reply }) => {
             </button>
             <br /><br />
             Thank you,<br />
-            <strong>Training and Placement Department, PICT</strong>
+            <strong>Team ElevateHire</strong>
           </div>
         </body>
       </html>`,
