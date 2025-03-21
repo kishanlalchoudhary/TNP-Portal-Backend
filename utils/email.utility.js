@@ -51,14 +51,14 @@ const sendStudentVerifiedEmail = async ({ email }) => {
             .email-container {
               max-width: 600px;
               margin: 20px auto;
-              background: #ffffff;
+              background-color: #ffffff;
               padding: 20px;
               border-radius: 8px;
               box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
               text-align: center;
             }
             .logo {
-              width: 100px;
+              width: 210px;
             }
             .content {
               font-size: 16px;
@@ -90,8 +90,8 @@ const sendStudentVerifiedEmail = async ({ email }) => {
         </head>
         <body>
           <div class="email-container">
-            <img src="${config.logoURL}" alt="Company Logo" class="logo" />
-            <h2>Pune Institute of Computer Technology</h2>
+            <img src="${config.logoURL}" alt="Logo" class="logo" />
+            <h2>ElevateHire - Placement Made Easy</h2>
             <h3>Student Verification Successful</h3>
             <p class="content">
               Your student details have been successfully verified. You are now
@@ -105,7 +105,7 @@ const sendStudentVerifiedEmail = async ({ email }) => {
               </button>
               <br /><br />
               Thank you,<br />
-              <strong>Training and Placement Department, PICT</strong>
+              <strong>Team ElevateHire</strong>
             </p>
           </div>
         </body>
