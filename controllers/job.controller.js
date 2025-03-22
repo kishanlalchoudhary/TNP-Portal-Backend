@@ -197,7 +197,9 @@ const applyToJob = async (req, res) => {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
     if (job.applicationDeadline < new Date()) {
-      return res.status(404).json({ success: false, message: "Job expired" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Job is not active" });
     }
 
     const student = await prisma.student.findUnique({
@@ -365,6 +367,9 @@ const markShortlisted = async (req, res) => {
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
+    if (job.applicationDeadline > new Date()) {
+      return res.status(400).json({ success: false, message: "Job is active" });
+    }
 
     const filter = { isDreamPlaced: false };
     if (job.dreamCompany === "No") {
@@ -399,6 +404,9 @@ const getShortlistedStudents = async (req, res) => {
     const job = await prisma.job.findUnique({ where: { id } });
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
+    }
+    if (job.applicationDeadline > new Date()) {
+      return res.status(400).json({ success: false, message: "Job is active" });
     }
 
     const students = await prisma.student.findMany({
@@ -468,6 +476,9 @@ const markPlaced = async (req, res) => {
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
+    if (job.applicationDeadline > new Date()) {
+      return res.status(400).json({ success: false, message: "Job is active" });
+    }
 
     const filter = { isDreamPlaced: false };
     if (job.dreamCompany === "No") {
@@ -513,6 +524,9 @@ const getPlacedStudents = async (req, res) => {
     const job = await prisma.job.findUnique({ where: { id } });
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
+    }
+    if (job.applicationDeadline > new Date()) {
+      return res.status(400).json({ success: false, message: "Job is active" });
     }
 
     const students = await prisma.student.findMany({
@@ -574,6 +588,9 @@ const getShortlistedResults = async (req, res) => {
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
     }
+    if (job.applicationDeadline > new Date()) {
+      return res.status(400).json({ success: false, message: "Job is active" });
+    }
 
     const students = await prisma.student.findMany({
       where: {
@@ -614,6 +631,9 @@ const getPlacedResults = async (req, res) => {
     const job = await prisma.job.findUnique({ where: { id } });
     if (!job) {
       return res.status(404).json({ success: false, message: "Job not found" });
+    }
+    if (job.applicationDeadline > new Date()) {
+      return res.status(400).json({ success: false, message: "Job is active" });
     }
 
     const students = await prisma.student.findMany({
